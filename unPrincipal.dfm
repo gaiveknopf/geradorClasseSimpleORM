@@ -319,7 +319,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 367
         Top = 50
         TabOrder = 3
-        Text = 'd@t@box1825'
+        Text = '1234'
         Width = 162
       end
       object edtServer: TcxTextEdit
@@ -333,7 +333,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 86
         Top = 77
         TabOrder = 5
-        Text = '8152'
+        Text = '5432'
         Width = 48
       end
       object btnConectar: TcxButton
@@ -369,27 +369,14 @@ object frmPrincipal: TfrmPrincipal
       Height = 46
       TabOrder = 2
       object Label9: TLabel
-        Left = 157
-        Top = 10
+        Left = 338
+        Top = 11
         Width = 445
         Height = 25
         Caption = 'Gerador de Classes SimpleORM - Postgres '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnHighlight
         Font.Height = -21
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label10: TLabel
-        Left = 723
-        Top = 27
-        Width = 407
-        Height = 16
-        Caption = 'Macgeiver Knopf - Databox Sistemas - Whats (47)98806-3880'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBtnHighlight
-        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False

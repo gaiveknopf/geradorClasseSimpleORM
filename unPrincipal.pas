@@ -60,7 +60,6 @@ type
     Panel3: TPanel;
     Label9: TLabel;
     btn3: TcxButton;
-    Label10: TLabel;
     procedure btnConectarClick(Sender: TObject);
     procedure btn2Click(Sender: TObject);
     procedure btn1Click(Sender: TObject);
