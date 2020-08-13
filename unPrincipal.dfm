@@ -497,10 +497,8 @@ object frmPrincipal: TfrmPrincipal
     ConnectionName = 'postgres'
     Params.Strings = (
       'User_Name=postgres'
-      'Password=d@t@box1825'
-      'Database=BOX_EMPRESA'
-      'Server=192.168.2.150'
-      'Port=8152'
+      'Server='
+      'Port='
       'DriverID=PG')
     FetchOptions.AssignedValues = [evMode]
     ResourceOptions.AssignedValues = [rvAutoReconnect]
@@ -509,7 +507,6 @@ object frmPrincipal: TfrmPrincipal
     UpdateOptions.EnableDelete = False
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
-    Connected = True
     LoginPrompt = False
     Left = 754
     Top = 248
