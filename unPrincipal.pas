@@ -974,7 +974,7 @@ begin
         if not DirectoryExists(edtPath.Text + '\src\Entidades') then
           CreateDir(edtPath.Text + '\src\Entidades');
 
-        script.Lines.SaveToFile(edtPath.Text + '\src\Entidades\' + edtApp.Text + '.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + '.pas');
+        script.Lines.SaveToFile(edtPath.Text + '\src\Entidades\' + edtApp.Text + '.Model.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + '.pas');
 
       end;
     qryLista_Tabelas.Next;
