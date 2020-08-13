@@ -118,11 +118,11 @@ object frmPrincipal: TfrmPrincipal
         OnClick = btn2Click
       end
       object btn1: TcxButton
-        Left = 134
-        Top = 78
-        Width = 199
+        Left = 133
+        Top = 111
+        Width = 200
         Height = 27
-        Caption = 'Criar Classes Entidades'
+        Caption = 'Criar Todas Classes Entidades'
         Colors.Default = clGrayText
         Colors.DefaultText = clGrayText
         Colors.Normal = clGrayText
@@ -190,6 +190,32 @@ object frmPrincipal: TfrmPrincipal
         Font.Style = [fsBold]
         ParentFont = False
         OnClick = btn3Click
+      end
+      object btn4: TcxButton
+        Left = 133
+        Top = 78
+        Width = 200
+        Height = 27
+        Caption = 'Criar Classe Entidade Selecionada'
+        Colors.Default = clGrayText
+        Colors.DefaultText = clGrayText
+        Colors.Normal = clGrayText
+        Colors.NormalText = clGrayText
+        Colors.Hot = clGrayText
+        Colors.HotText = clGrayText
+        Colors.Pressed = clGrayText
+        Colors.PressedText = clGrayText
+        Colors.Disabled = clGrayText
+        Colors.DisabledText = clGrayText
+        Enabled = False
+        TabOrder = 6
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        OnClick = btn4Click
       end
     end
     object cxGroupBox2: TcxGroupBox
