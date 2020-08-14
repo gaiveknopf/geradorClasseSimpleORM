@@ -4,22 +4,27 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, IniFiles,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide,
-  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy, dxSkinGlassOceans, dxSkinHighContrast, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark, dxSkinOffice2019Colorful, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore,
   dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxEdit, cxNavigator, dxDateRanges, Data.DB, cxDBData, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, cxGridCustomTableView, cxGridTableView, cxGridServerModeTableView, FireDAC.Comp.Client, dxServerModeData, dxServerModeFireDACDataSource, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridDBTableView, cxGrid, FireDAC.DApt, Vcl.Menus, Vcl.StdCtrls, cxButtons, Vcl.ExtCtrls, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.Comp.DataSet, cxContainer, cxTextEdit, cxCheckBox, cxMemo, cxGroupBox, dxGDIPlusClasses, cxImage,
-  cxDBEdit, cxMaskEdit, cxButtonEdit, Vcl.DBCtrls;
+  cxDBEdit, cxMaskEdit, cxButtonEdit, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkinHighContrast, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
+  dxSkinOffice2019Colorful, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008,
+     GeradorSimpleORM.Model.Gerador.ModelGeradorClasse,
+     GeradorSimpleORM.Model.Conexoes.Metainfoquery,
+     GeradorSimpleORM.Model.Conexoes.ConexaoFiredac,
+     GeradorSimpleORM.Model.Conexoes.Factory.Conexao,
+     GeradorSimpleORM.Model.Conexoes.Interfaces,
+     GeradorSimpleORM.Model.Conexoes.TableFiredac,
+     GeradorSimpleORM.Model.Gerador.Interfaces;
 
 type
   TfrmPrincipal = class(TForm)
     FDConexao: TFDConnection;
     Panel1: TPanel;
-    qryLista_Campos: TFDQuery;
-    dsLista_Campos: TDataSource;
     dsLista_Tabelas: TDataSource;
     qryLista_Tabelas: TFDQuery;
     grdGridTabelas: TcxGrid;
@@ -30,7 +35,6 @@ type
     cxGroupBox1: TcxGroupBox;
     label235: TLabel;
     cxGroupBox2: TcxGroupBox;
-    btn2: TcxButton;
     btn1: TcxButton;
     dsCFG_Geral: TDataSource;
     Label2: TLabel;
@@ -47,32 +51,50 @@ type
     edtPort: TcxTextEdit;
     btnConectar: TcxButton;
     qryLista_TabelasTABELA: TWideStringField;
-    qryLista_CamposCOLUNA: TWideStringField;
-    qryLista_CamposTIPO: TWideMemoField;
     grdGridTabelasViewTABELA: TcxGridDBColumn;
     edtApp: TcxTextEdit;
     Label1: TLabel;
     edtPath: TcxTextEdit;
     qryLista_TabelasOK: TWideStringField;
     grdGridTabelasViewOK: TcxGridDBColumn;
-    Label8: TLabel;
-    edtEntidade: TcxTextEdit;
     Panel3: TPanel;
     Label9: TLabel;
-    btn3: TcxButton;
-    btn4: TcxButton;
+    FDMIQ: TFDMetaInfoQuery;
+    FDMIQRECNO: TIntegerField;
+    FDMIQCATALOG_NAME: TWideStringField;
+    FDMIQSCHEMA_NAME: TWideStringField;
+    FDMIQTABLE_NAME: TWideStringField;
+    FDMIQCOLUMN_NAME: TWideStringField;
+    FDMIQCOLUMN_POSITION: TIntegerField;
+    FDMIQCOLUMN_DATATYPE: TIntegerField;
+    FDMIQCOLUMN_TYPENAME: TWideStringField;
+    FDMIQCOLUMN_ATTRIBUTES: TLongWordField;
+    FDMIQCOLUMN_PRECISION: TIntegerField;
+    FDMIQCOLUMN_SCALE: TIntegerField;
+    FDMIQCOLUMN_LENGTH: TIntegerField;
+    cheSeparaPasta: TCheckBox;
+    cheEntidade: TCheckBox;
+    cheController: TCheckBox;
+    cheModel: TCheckBox;
+    cheInterface: TCheckBox;
+    btn2: TcxButton;
+    cheVideo: TCheckBox;
+    edtSchemaName: TcxTextEdit;
+    Label8: TLabel;
+    cheAutoInc: TCheckBox;
     procedure btnConectarClick(Sender: TObject);
-    procedure btn2Click(Sender: TObject);
     procedure btn1Click(Sender: TObject);
-    procedure btn3Click(Sender: TObject);
-    procedure btn4Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure btn2Click(Sender: TObject);
   private
     procedure Conecta_Bancos;
-    procedure GerarController(aTableName: string);
-    procedure GerarClassController(aPath, aTableName: string);
-    function EliminaBrancos(sTexto: String): String;
-    function RemoveAcento(s: string): string;
-    procedure Gera_Model_Controller;
+    procedure Gera_Entidade(aTable: string);
+
+    procedure Gera_Interface(aTable: string);
+    procedure Gera_Controller(aTable: string);
+    procedure Gera_Model(aTable: string);
+
+    procedure Verifica_AutoInc(autoIncField : string);
     { Private declarations }
   public
     { Public declarations }
@@ -80,51 +102,248 @@ type
 
 var
   frmPrincipal: TfrmPrincipal;
-  FQuery : TFDQuery;
+  FClasse: TStringList;
+  FPrivate: TStringList;
+  FBody: TStringList;
+  FInterface: TStringList;
+  FProperty: TStringList;
+  FPropertyInterface: TStringList;
+  FProcedureLimpar: TStringList;
+  FPK: TStringList;
+  FTableName: String;
+  FUnitName: String;
+  FTipoCampo: String;
+  FConexao: iModelConexao;
+  FListaTabela: iModelMetaInfoQuery;
+  FListaFields: iModelMetaInfoQuery;
+  FProjeto: String;
+
+  VAutoInc : Boolean;
+
+  VEntidade : TMemo;
+  VController : TMemo;
+  VInterface : TMemo;
+  VModel : TMemo;
 
 implementation
 
 {$R *.dfm}
 
-function TfrmPrincipal.RemoveAcento(s: string): string;
-var
-  i : integer;
-  aux, novo : string;
+procedure TfrmPrincipal.Gera_Controller(aTable: string);
 begin
-  aux := AnsiUpperCase(s);
-    for i := 1 to length(aux) do
-    begin
-      case aux[i] of
-      'Б', 'В', 'Г', 'А', 'Д', 'б', 'в', 'г', 'а', 'д': aux[i] := 'A';
-      'Й', 'К', 'И', 'Л', 'й', 'к', 'и', 'л', '&': aux[i] := 'E';
-      'Н', 'О', 'М', 'П', 'н', 'о', 'м', 'п': aux[i] := 'I';
-      'У', 'Ф', 'Х', 'Т', 'Ц', 'у', 'ф', 'х', 'т', 'ц': aux[i] := 'O';
-      'Ъ', 'Ы', 'Щ', 'Ь', 'ъ', 'ы', 'щ', 'ь': aux[i] := 'U';
-      'З', 'з': aux[i] := 'C';
-      'С', 'с': aux[i] := 'N';
-      'Э', 'э': aux[i] := 'Y';
-      else
-        if ord(aux[i]) > 127 then
-          aux[i] := #32;
-      end;
-    end;
-  RemoveAcento := aux;
+
 end;
 
-function TfrmPrincipal.EliminaBrancos(sTexto: String): String;
-// Elimina todos os espaзos em branco da string
-//(inclusive os espaзos entre as palavras)
+procedure TfrmPrincipal.Gera_Entidade(aTable : string);
 var
-nPos : Integer;
+  FProperty: TStringList;
+  FPropertyInterface: TStringList;
+  FProcedureLimpar: TStringList;
+  FPK: TStringList;
+  FUnitName: String;
+  FTipoCampo: String;
+  MPK: String;
+  I: Integer;
 begin
-  nPos := 1;
-  while Pos(' ',sTexto) > 0 do
+  FInterface := TStringList.Create;
+  FBody := TStringList.Create;
+  FPrivate := TStringList.Create;
+  FClasse := TStringList.Create;
+  FProperty := TStringList.Create;
+  FPropertyInterface := TStringList.Create;
+  FProcedureLimpar := TStringList.Create;
+  FPK := TStringList.Create;
+  FClasse := TStringList.Create;
+
+  FProcedureLimpar.Add('');
+
+  (FDMIQ.Connection).GetKeyFieldNames('', edtSchemaName.Text, aTable, '', FPK);
+
+  FDMIQ.Active := False;
+
+  FDMIQ.MetaInfoKind := mkTableFields;
+  FDMIQ.ObjectName := aTable;
+
+  FDMIQ.Active := True;
+
+  while not(FDMIQ.Eof) do
   begin
-    nPos := Pos(' ',sTexto);
-    (*Text[nPos] := ''; *)
-    Delete(sTexto,nPos,1);
+    if (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper.Contains('INT')) then
+    begin
+      FTipoCampo := 'Integer';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := 0;');
+    end
+    else
+    if ((FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'NUMERIC') or
+        (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'DECIMAL') or
+        (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'FLOAT') or
+        (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'DOUBLE PRECISION') or
+        (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'DOUBLE'))
+    then
+    begin
+      FTipoCampo := 'Currency';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := 0;');
+    end
+    else
+    if (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'BIGINT') then
+    begin
+      FTipoCampo := 'Int64';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + '(0);');
+    end
+    else
+    if (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'BLOB SUB_TYPE 1') or
+      (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'BLOB SUB_TYPE 2') or
+      (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'BLOB SUB_TYPE 0') or
+      (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'VARCHAR') or
+      (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'CHAR')
+    then
+    begin
+      FTipoCampo := 'String';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := '''';');
+    end
+    else
+    if (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'VARBINARY') then
+    begin
+      FTipoCampo := 'TMemoField';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := '''';');
+    end
+    else
+    if (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'DATE') or
+       (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'TIME') or
+       (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'TIMESTAMP') or
+       (FDMIQ.FieldByName('COLUMN_TYPENAME').AsString.Trim.ToUpper = 'DATETIME')
+    then
+    begin
+      FTipoCampo := 'TDateTime';
+      FProcedureLimpar.Add('  Self.' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := 0;');
+    end;
+
+    FInterface.Add('    procedure Set' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' (const Value :' + FTipoCampo + ');');
+    FInterface.Add('    function Get' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' :' + FTipoCampo + ';');
+    FInterface.Add('');
+
+    for I := 0 to FPK.Count-1 do
+    begin
+      if FPK[I].Trim.ToUpper = FDMIQ.FieldByName('COLUMN_NAME').AsString.Trim.ToUpper then
+      begin
+
+        VAutoInc := False;
+
+        if cheAutoInc.Checked then Verifica_AutoInc(FDMIQ.FieldByName('COLUMN_NAME').AsString);
+
+        if VAutoInc = True then
+          MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + '), PK, AutoInc]'
+        else
+          MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + '), PK, ]';
+
+
+        VAutoInc := False;
+
+        Break;
+      end
+      else
+        MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + ')]';
+    end;
+    FProperty.Add(MPK);
+
+    FProperty.Add('    property ' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' :' + FTipoCampo + ' read Get' +
+      UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' write Set' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ';');
+
+    FPropertyInterface.Add('    property ' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' :' + FTipoCampo + ' read Get' +
+      UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' write Set' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ';');
+
+    FBody.Add('procedure T' + UpperCase(aTable) + '.Set' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' (const Value :' + FTipoCampo + ');');
+
+    FBody.Add('begin');
+    FBody.Add('  F' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' := Value;');
+    FBody.Add('end;');
+    FBody.Add('');
+
+    FBody.Add('function T' + UpperCase(aTable) + '.Get' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' :' + FTipoCampo + ';');
+    FBody.Add('begin');
+    FBody.Add('  Result := F' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ';');
+    FBody.Add('end;');
+    FBody.Add('');
+
+    FPrivate.Add('    F' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString) + ' :' + FTipoCampo + ';');
+    FDMIQ.Next;
   end;
-  Result := sTexto;
+
+  FClasse.Clear;
+  FClasse.Add('unit ' + edtApp.Text + '.Model.Entidade.' + UpperCase(aTable) + ';');
+  FClasse.Add('');
+  FClasse.Add('interface');
+  FClasse.Add('');
+  FClasse.Add('uses ');
+  FClasse.Add('  SimpleAttributes;');
+  FClasse.Add('');
+  FClasse.Add('type');
+  FClasse.Add('  [Tabela(''' + UpperCase(aTable) + ''')]');
+  FClasse.Add('  T' + UpperCase(aTable) + ' = class');
+  FClasse.Add('  private');
+  FClasse.Add(FPrivate.Text);
+  FClasse.Add(FInterface.Text);
+  FClasse.Add('  public');
+  FClasse.Add('    constructor Create;');
+  FClasse.Add('    destructor Destroy; override;');
+  FClasse.Add('    procedure Limpar;');
+  FClasse.Add(FProperty.Text);
+  FClasse.Add('end;');
+  FClasse.Add('');
+  FClasse.Add('implementation');
+  FClasse.Add('');
+  FClasse.Add('constructor T' + UpperCase(aTable) + '.Create;');
+  FClasse.Add('begin');
+  FClasse.Add('  Limpar;');
+  FClasse.Add('end;');
+  FClasse.Add('');
+  FClasse.Add('destructor T' + UpperCase(aTable) + '.Destroy;');
+  FClasse.Add('begin');
+  FClasse.Add('');
+  FClasse.Add('  inherited;');
+  FClasse.Add('end;');
+  FClasse.Add('');
+  FClasse.Add(FBody.Text);
+  FClasse.Add('procedure T' + UpperCase(aTable) + '.Limpar;');
+  FClasse.Add('begin');
+  FClasse.Add(FProcedureLimpar.Text);
+  FClasse.Add('end;');
+  FClasse.Add('');
+  FClasse.Add('end.');
+
+  VEntidade.Text := FClasse.Text;
+
+  script.Text := FClasse.Text;
+
+  FDMIQ.Active := False;
+end;
+
+
+procedure TfrmPrincipal.Gera_Interface(aTable: string);
+begin
+
+end;
+
+procedure TfrmPrincipal.Gera_Model(aTable: string);
+begin
+
+end;
+
+procedure TfrmPrincipal.Verifica_AutoInc(autoIncField : string);
+var
+  FClasse: TStringList;
+  i: integer;
+  sequence : string;
+begin
+  sequence := qryLista_TabelasTABELA.AsString + '_' + autoIncField + '_seq';
+
+  FClasse := TStringList.Create;
+  FDConexao.GetGeneratorNames('', edtSchemaName.Text, sequence, FClasse);
+
+  if FClasse.count = 1 then
+    begin
+      VAutoInc := True;
+    end;
 end;
 
 procedure TfrmPrincipal.btnConectarClick(Sender: TObject);
@@ -136,25 +355,7 @@ begin
       btnConectar.Caption := 'Desconectar';
       btn1.Enabled := True;
       btn2.Enabled := True;
-      btn3.Enabled := True;
-      btn4.Enabled := True;
-
       qryLista_Tabelas.Open();
-      qryLista_Campos.Open('SELECT ' +
-                           'a.attname as "COLUNA", ' +
-                           'pg_catalog.format_type(a.atttypid, a.atttypmod) as TIPO ' +
-                           'FROM ' +
-                           'pg_catalog.pg_attribute a ' +
-                           'WHERE ' +
-                           'a.attnum > 0 ' +
-                           'AND NOT a.attisdropped ' +
-                           'AND a.attrelid = ( ' +
-                           'SELECT c.oid ' +
-                           'FROM pg_catalog.pg_class c ' +
-                           'LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace ' +
-                           'WHERE c.relname = ' + QuotedStr(qryLista_TabelasTABELA.asString) + ' ' +
-                           'AND pg_catalog.pg_table_is_visible(c.oid) ' +
-                           ')');
     end
   else
     begin
@@ -162,8 +363,6 @@ begin
       btnConectar.Caption := 'Conectar';
       btn1.Enabled := False;
       btn2.Enabled := False;
-      btn3.Enabled := False;
-      btn4.Enabled := False;
     end;
 end;
 
@@ -196,892 +395,172 @@ begin
     end;
 end;
 
-procedure TfrmPrincipal.btn4Click(Sender: TObject);
-var
-I, J : integer;
-Campo, Tipo : string;
-PK : boolean;
-qryPK : TFDQuery;
+procedure TfrmPrincipal.btn2Click(Sender: TObject);
 begin
-  FQuery := TFDQuery.Create(nil);
-  FQuery.Connection := FDConexao;
-
-  if qryLista_TabelasOK.AsString = 'Sim' then
-    begin
-      FQuery.Close;
-      FQuery.Open('SELECT * FROM ' + qryLista_TabelasTABELA.asString);
-
-      script.lines.Clear;
-
-      script.Lines.Add('unit ' + edtApp.Text + '.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + ';');
-      script.Lines.Add('');
-      script.Lines.Add('interface');
-      script.Lines.Add('');
-      script.Lines.Add('uses');
-      script.Lines.Add('  System.Generics.Collections, System.Classes, Rest.Json, System.JSON, SimpleAttributes;');
-      script.Lines.Add('');
-      script.Lines.Add('type');
-      script.Lines.Add('  [Tabela(' + QuotedStr(RemoveAcento(qryLista_TabelasTABELA.asString)) + ')]');
-      script.Lines.Add('  T' + RemoveAcento(qryLista_TabelasTABELA.asString) + ' = class');
-      script.Lines.Add('  private');
-
-      for I := 0 to FQuery.FieldCount -1 do
-      begin
-        if FQuery.Fields[i].ClassName = 'TIntegerField' then
-          Tipo := 'integer;'
-        else if FQuery.Fields[i].ClassName = 'TSmallintField' then
-          Tipo := 'integer;'
-        else if FQuery.Fields[i].ClassName = 'TLargeintField' then
-          Tipo := 'integer;'
-        else if FQuery.Fields[i].ClassName = 'TIBStringField' then
-          Tipo := 'string;'
-        else if FQuery.Fields[i].ClassName = 'TDateField' then
-          Tipo := 'TDate;'
-        else if FQuery.Fields[i].ClassName = 'TIBBCDField' then
-          Tipo := 'real;'
-        else if FQuery.Fields[i].ClassName = 'TFMTBCDField' then
-          Tipo := 'real;'
-        else if FQuery.Fields[i].ClassName = 'TCurrencyField' then
-          Tipo := 'real;'
-        else if FQuery.Fields[i].ClassName = 'TSingleField' then
-          Tipo := 'real;'
-        else if FQuery.Fields[i].ClassName = 'TStringField' then
-          Tipo := 'string;'
-        else
-          Tipo := 'string;'+ '   {' + FQuery.Fields[i].ClassName + '}';
-
-        script.Lines.Add('    F' + RemoveAcento(FQuery.Fields[i].FieldName) + ': ' + Tipo );
-      end;
-
-      script.Lines.Add('');
-      script.Lines.Add('  public');
-      script.Lines.Add('    constructor Create;');
-      script.Lines.Add('    destructor Destroy; override;');
-      script.Lines.Add('');
-      script.Lines.Add('  published');
-      script.Lines.Add('{verificar o se o campo й AutoInc}');
-      script.Lines.Add('{Exemplo: [Campo('+QuotedStr('NOME_CAMPO')+'), PK, AutoInc] }');
-      for I := 0 to FQuery.FieldCount -1 do
-      begin
-        //Verifica se й chave primaria
-        qryPK := TFDQuery.Create(nil);
-        qryPK.Connection := FDConexao;
-        qryPK.Open('SELECT ' +
-                   'A.attname ' +
-                   'FROM ' +
-                   'pg_index i ' +
-                   'JOIN pg_attribute A ON A.attrelid = i.indrelid ' +
-                   'AND A.attnum = ANY ( i.indkey ) ' +
-                   'WHERE ' +
-                   'i.indrelid = ' + QuotedStr(qryLista_TabelasTABELA.asString) + ' :: regclass ' +
-                   'AND attname = '+ QuotedStr(FQuery.Fields[i].FieldName) + ' ' +
-                   'AND i.indisprimary');
-
-        if not qryPK.IsEmpty then pk := True else pk := False;
-        qryPK.Free;
-
-        if FQuery.Fields[i].ClassName = 'TIntegerField' then
-          campo := 'integer'
-        else if FQuery.Fields[i].ClassName = 'TSmallintField' then
-          campo := 'integer'
-        else if FQuery.Fields[i].ClassName = 'TLargeintField' then
-          campo := 'integer'
-        else if FQuery.Fields[i].ClassName = 'TIBStringField' then
-          campo := 'string'
-        else if FQuery.Fields[i].ClassName = 'TDateField' then
-          campo := 'TDate'
-        else if FQuery.Fields[i].ClassName = 'TIBBCDField' then
-          campo := 'real'
-        else if FQuery.Fields[i].ClassName = 'TFMTBCDField' then
-          campo := 'real'
-        else if FQuery.Fields[i].ClassName = 'TCurrencyField' then
-          campo := 'real'
-        else if FQuery.Fields[i].ClassName = 'TSingleField' then
-          campo := 'real'
-        else if FQuery.Fields[i].ClassName = 'TStringField' then
-          campo := 'string'
-        else
-          campo := 'string';
-
-        if PK = True then
-          script.Lines.Add('    [Campo(' + quotedstr(RemoveAcento(FQuery.Fields[i].FieldName)) + '), PK]')
-        else
-          script.Lines.Add('    [Campo(' + quotedstr(RemoveAcento(FQuery.Fields[i].FieldName))+')]');
-
-        script.Lines.Add('    property ' + RemoveAcento(FQuery.Fields[i].FieldName)
-                                   +': ' + Tipo + ' read F' + RemoveAcento(FQuery.Fields[i].FieldName)
-                                   +' write F' + RemoveAcento(FQuery.Fields[i].FieldName) + ';');
-      end;
-
-      script.Lines.Add('');
-      script.Lines.Add('    function ToJSONObject: TJsonObject;');
-      script.Lines.Add('    function ToJsonString: string;');
-      script.Lines.Add('');
-      script.Lines.Add('  end;');
-      script.Lines.Add('');
-      script.Lines.Add('implementation');
-      script.Lines.Add('');
-      script.Lines.Add('constructor T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.Create;');
-      script.Lines.Add('begin');
-      script.Lines.Add('');
-      script.Lines.Add('end;');
-      script.Lines.Add('');
-      script.Lines.Add('destructor T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.Destroy;');
-      script.Lines.Add('begin');
-      script.Lines.Add('');
-      script.Lines.Add('  inherited;');
-      script.Lines.Add('end;');
-      script.Lines.Add('');
-      script.Lines.Add('function T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.ToJSONObject: TJsonObject;');
-      script.Lines.Add('begin');
-      script.Lines.Add('  Result := TJson.ObjectToJsonObject(Self);');
-      script.Lines.Add('end;');
-      script.Lines.Add('');
-      script.Lines.Add('function T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.ToJsonString: string;');
-      script.Lines.Add('begin');
-      script.Lines.Add('  result := TJson.ObjectToJsonString(self);');
-      script.Lines.Add('end;');
-      script.Lines.Add('');
-      script.Lines.Add('end.');
-
-      if not DirectoryExists(edtPath.Text) then
-        CreateDir(edtPath.Text);
-      if not DirectoryExists(edtPath.Text + '\src') then
-        CreateDir(edtPath.Text + '\src');
-      if not DirectoryExists(edtPath.Text + '\src\Entidades') then
-        CreateDir(edtPath.Text + '\src\Entidades');
-
-      script.Lines.SaveToFile(edtPath.Text + '\src\Entidades\' + edtApp.Text + '.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + '.pas');
-
-    end;
-  FQuery.Free;
-  ShowMessage('Classe criada com sucesso');
-end;
-
-procedure TfrmPrincipal.btn3Click(Sender: TObject);
-begin
-  if edtApp.Text = '' then
-    begin
-      ShowMessage('Preencha o campo nome do aplicativo');
-      abort
-     end;
   qryLista_Tabelas.First;
   while not qryLista_Tabelas.Eof do
-  begin
-    Gera_Model_Controller;
-
-    qryLista_Tabelas.Next;
-  end;
-
-  ShowMessage('Models e Controllers criados com sucesso');
-end;
-
-procedure TfrmPrincipal.btn2Click(Sender: TObject);
-var
-  Tabelas : TStringList;
-  I : Integer;
-begin
-  if edtApp.Text = '' then
     begin
-      ShowMessage('Preencha o campo nome do aplicativo');
-      abort
-     end;
+      if qryLista_TabelasOK.asString = 'Sim' then
+        begin
+          //Gera Entidade
+          if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+          if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+          if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+          if cheController.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
 
-  Gera_Model_Controller;
+          //Separado Por Pasta
+          if cheSeparaPasta.Checked then
+          begin
+            if cheVideo.Checked = false then
+            begin
+              //Entidade
+              if cheEntidade.Checked then
+              begin
+                if not DirectoryExists(edtPath.Text) then
+                  CreateDir(edtPath.Text);
+                if not DirectoryExists(edtPath.Text + '\src') then
+                  CreateDir(edtPath.Text + '\src');
+                if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+                  CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+                VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+              end;
+              //Interface
+              if cheInterface.Checked then
+              begin
 
-  ShowMessage('Model e Controller criados com sucesso');
+              end;
+              //Model
+              if cheModel.Checked then
+              begin
+
+              end;
+              //Controller
+              if cheController.Checked then
+              begin
+
+              end;
+            end;
+          end
+          else
+          //Todos na mesma pasta
+          begin
+            if cheVideo.Checked = false then
+            begin
+              //Entidade
+              if cheEntidade.Checked then
+              begin
+                if not DirectoryExists(edtPath.Text) then
+                  CreateDir(edtPath.Text);
+                if not DirectoryExists(edtPath.Text + '\src') then
+                  CreateDir(edtPath.Text + '\src');
+                VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+              end;
+              //Interface
+              if cheInterface.Checked then
+              begin
+
+              end;
+              //Model
+              if cheModel.Checked then
+              begin
+
+              end;
+              //Controller
+              if cheController.Checked then
+              begin
+
+              end;
+            end;
+          end;
+        end;
+      qryLista_Tabelas.Next;
+    end;
+
+  ShowMessage('Arquivos gerados com sucesso');
 end;
 
-procedure TfrmPrincipal.Gera_Model_Controller;
-var
- campo, tabela : string;
- i, j : Integer;
+procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
-  if qryLista_TabelasOK.asString = 'Sim' then
-  begin
-    tabela := RemoveAcento(qryLista_TabelasTABELA.AsString);
-
-    script.Lines.Clear;
-    script.lines.add('unit ' + edtApp.Text + '.Model.' + tabela + '.Interfaces;');
-    script.lines.add('');
-    script.lines.add('interface');
-    script.lines.add('');
-    script.lines.add('uses');
-    script.lines.add('  ' + edtApp.Text + '.' + edtEntidade.Text + '.' + tabela + ', SimpleInterface, Data.DB;');
-    script.lines.add('');
-    script.lines.add('type');
-    script.lines.add('  iModel'+ tabela +' = interface');
-    script.lines.add('    [gerar assinatura ctrl+shift+g]');
-    script.lines.add('    function Entidade : T' + tabela + ';');
-    script.lines.add('    function DAO : iSimpleDAO<T' + tabela + '>;');
-    script.lines.add('    function DataSource(aDataSource : TDataSource) : iModel' + tabela + ';');
-    script.lines.add('  end;');
-    script.lines.add('');
-    script.lines.add('implementation');
-    script.lines.add('');
-    script.lines.add('end.');
-
-          if not DirectoryExists(edtPath.Text) then
-            CreateDir(edtPath.Text);
-          if not DirectoryExists(edtPath.Text + '\src') then
-            CreateDir(edtPath.Text + '\src');
-          script.Lines.SaveToFile(edtPath.Text+'\src\' + edtApp.Text + '.Model.' + tabela + '.Interfaces.pas');
-
-    script.Lines.Clear;
-    script.lines.add('unit ' + edtApp.Text + '.Model.' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('interface');
-    script.lines.add('');
-    script.lines.add('uses');
-    script.lines.add('  ' + edtApp.Text + '.Model.' + tabela + '.Interfaces, ' + edtApp.Text + '.Entidades.' + tabela + ', SimpleInterface,');
-    script.lines.add('  Data.DB, SimpleDAO, SimpleQueryRestDW;');
-    script.lines.add('');
-    script.lines.add('type');
-    script.lines.add('  TModel' + tabela + ' = class(TInterfacedObject, iModel' + tabela + ')');
-    script.lines.add('    private');
-    script.lines.add('      FEntidade : T' + tabela + ';');
-    script.lines.add('      FDAO : iSimpleDAO<T' + tabela + '>;');
-    script.lines.add('      FDataSource : TDataSource;');
-    script.lines.add('    public');
-    script.lines.add('      constructor Create;');
-    script.lines.add('      destructor Destroy; override;');
-    script.lines.add('      class function New : iModel' + tabela + ';');
-    script.lines.add('      function Entidade: T' + tabela + ';');
-    script.lines.add('      function DAO: iSimpleDAO<T' + tabela + '>;');
-    script.lines.add('      function DataSource(aDataSource: TDataSource): iModel' + tabela + ';');
-    script.lines.add('  end;');
-    script.lines.add('');
-    script.lines.add('implementation');
-    script.lines.add('');
-    script.lines.add('{ TModel' + tabela + ' }');
-    script.lines.add('');
-    script.lines.add('uses System.SysUtils;');
-    script.lines.add('');
-    script.lines.add('constructor TModel' + tabela + '.Create;');
-    script.lines.add('begin');
-    script.lines.add('  FEntidade := T' + tabela + '.Create;');
-    script.lines.add('  FDAO := TSimpleDAO<T' + tabela + '>.New;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('function TModel' + tabela + '.DAO: iSimpleDAO<T' + tabela + '>;');
-    script.lines.add('begin');
-    script.lines.add('  Result := FDAO;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('function TModel' + tabela + '.DataSource(aDataSource: TDataSource): iModel' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  FDataSource := aDataSource;');
-    script.lines.add('  FDAO.DataSource(FDatasource);');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('destructor TModel' + tabela + '.Destroy;');
-    script.lines.add('begin');
-    script.lines.add('  Freeandnil(FEntidade);');
-    script.lines.add('  inherited;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('function TModel' + tabela + '.Entidade: T' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := FEntidade;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('class function TModel' + tabela + '.New : iModel' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self.Create;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('end.');
-
-        if not DirectoryExists(edtPath.Text) then
-          CreateDir(edtPath.Text);
-        if not DirectoryExists(edtPath.Text + '\src') then
-          CreateDir(edtPath.Text + '\src');
-        script.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Model.' + tabela + '.pas');
-
-    script.Lines.Clear;
-    script.lines.add('unit ' + edtApp.Text + '.Controller.' + tabela + '.Interfaces;');
-    script.lines.add('');
-    script.lines.add('interface');
-    script.lines.add('');
-    script.lines.add('uses');
-    script.lines.add('  Data.DB, ' + edtApp.Text + '.Entidades.' + tabela + ', System.JSON, System.Generics.Collections, Vcl.Forms;');
-    script.lines.add('');
-    script.lines.add('type');
-    script.lines.add('  iController' + tabela + ' = interface');
-    script.lines.add('    [GERAR ASSINATURA]');
-    script.lines.add('    function DataSource (aDataSource : TDataSource) : iController' + tabela + '; overload;');
-    script.lines.add('    function DataSource : TDataSource; overload;');
-    script.lines.add('    function Buscar : iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aID : integer) : iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aFiltro : TJsonobject; aOrdem : string) : iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aSQL : string) : iController' + tabela + '; overload;');
-    script.lines.add('    function Insert : iController' + tabela + ';');
-    script.lines.add('    function Delete : iController' + tabela + ';');
-    script.lines.add('    function Update : iController' + tabela + ';');
-    script.lines.add('    function Clear: iController' + tabela + ';');
-    script.lines.add('    function Ultimo(where : string) : iController' + tabela + ';');
-    script.lines.add('    function ' + tabela + ' : T' + tabela + ';');
-    script.lines.add('    function FromJsonObject(aJson : TJsonObject) : iController' + tabela + ';');
-    script.lines.add('    function List : TObjectList<T' + tabela + '>;');
-    script.lines.add('    function ExecSQL(sql : string) : iController' + tabela + ';');
-    script.lines.add('    function BindForm(aForm : TForm) : iController' + tabela + ';');
-    script.lines.add('  end;');
-    script.lines.add('');
-    script.lines.add('implementation');
-    script.lines.add('');
-    script.lines.add('end.');
-
-        if not DirectoryExists(edtPath.Text) then
-          CreateDir(edtPath.Text);
-        if not DirectoryExists(edtPath.Text + '\src') then
-          CreateDir(edtPath.Text + '\src');
-        script.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Controller.' + tabela + '.Interfaces.pas');
-
-    script.Lines.Clear;
-    script.lines.add('unit ' + edtApp.Text + '.Controller.' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('interface');
-    script.lines.add('');
-    script.lines.add('uses');
-    script.lines.add('  ' + edtApp.Text + '.Controller.' + tabela + '.Interfaces, Data.DB, ' + edtApp.Text + '.Entidades.' + tabela + ',');
-    script.lines.add('  ' + edtApp.Text + '.Model.' + tabela + '.Interfaces, System.Generics.Collections,');
-    script.lines.add('  System.Json, REST.Json, Vcl.Forms, SimpleRTTI;');
-    script.lines.add('');
-    script.lines.add('type');
-    script.lines.add('  TController' + tabela + ' = class(TInterfacedObject, iController' + tabela + ')');
-    script.lines.add('  private');
-    script.lines.add('    FModel : iModel' + tabela + ';');
-    script.lines.add('    FDataSource : TDataSource;');
-    script.lines.add('    FList : TObjectList<T' + tabela + '>;');
-    script.lines.add('    FEntidade : T' + tabela + ';');
-    script.lines.add('  public');
-    script.lines.add('    constructor Create;');
-    script.lines.add('    destructor Destroy; override;');
-    script.lines.add('    class function New: iController' + tabela + ';');
-    script.lines.add('    function DataSource(aDataSource: TDataSource): iController' + tabela + '; overload;');
-    script.lines.add('    function DataSource : TDataSource; overload;');
-    script.lines.add('    function Buscar: iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aID : integer) : iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aFiltro : TJsonobject; aOrdem : string) : iController' + tabela + '; overload;');
-    script.lines.add('    function Buscar(aSQL : string) : iController' + tabela + '; overload;');
-    script.lines.add('    function Insert: iController' + tabela + ';');
-    script.lines.add('    function Delete: iController' + tabela + ';');
-    script.lines.add('    function Update: iController' + tabela + ';');
-    script.lines.add('    function Clear: iController' + tabela + ';');
-    script.lines.add('    function Ultimo(where : string) : iController' + tabela + ';');
-    script.lines.add('    function ' + tabela + ': T' + tabela + ';');
-    script.lines.add('    function FromJsonObject(aJson : TJsonObject) : iController' + tabela + ';');
-    script.lines.add('    function List : TObjectList<T' + tabela + '>;');
-    script.lines.add('    function ExecSQL(sql : string) : iController' + tabela + ';');
-    script.lines.add('    function BindForm(aForm : TForm) : iController' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('  end;');
-    script.lines.add('');
-    script.lines.add('implementation');
-    script.lines.add('');
-    script.lines.add('uses');
-    script.lines.add('  ' + edtApp.Text + '.Model, System.SysUtils;');
-    script.lines.add('');
-    script.lines.add('{ TController' + tabela + ' }');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Buscar: iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('');
-    script.lines.add('  if not Assigned(FList) then');
-    script.lines.add('    FList := TObjectList<T' + tabela + '>.Create;');
-    script.lines.add('');
-    script.lines.add('  FModel.DAO.Find(FList);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Buscar(aID: integer): iController' + tabela + ';');
-    script.lines.add('var aux : string;');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('');
-    script.lines.add('  if Assigned(FEntidade) then');
-    script.lines.add('    Freeandnil(FEntidade);');
-    script.lines.add('');
-    script.lines.add('  FEntidade := FModel.DAO.Find(aID);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Buscar(aFiltro : TJsonobject; aOrdem : string) : iController'+tabela+';');
-    script.lines.add('var');
-    script.lines.add('  Item: TJSONPair;');
-    script.lines.add('  sql : string;');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  if not Assigned(FList) then');
-    script.lines.add('    FList := TObjectList<T' + tabela + '>.Create;');
-    script.lines.add('  try');
-    script.lines.add('    for Item in afiltro do');
-    script.lines.add('    begin');
-    script.lines.add('      if item.JsonString.Value = ''SQL'' then');
-    script.lines.add('      begin');
-    script.lines.add('        sql := (Item.JsonValue.Value);');
-    script.lines.add('      end');
-    script.lines.add('      else');
-    script.lines.add('      begin');
-    script.lines.add('        if sql <> '' then');
-    script.lines.add('          sql := sql + '' and '';');
-    script.lines.add('');
-    script.lines.add('        if UpperCase(Item.JsonString.Value) = ''DESCRICAO'' then   // verificar o campo de descriзгo');
-    script.lines.add('          sql := sql + UpperCase(Item.JsonString.Value) + '' containing '' + Quotedstr(Item.JsonValue.Value)');
-    script.lines.add('        else');
-    script.lines.add('          sql := sql + UpperCase(Item.JsonString.Value) + '' = '' + Quotedstr(Item.JsonValue.Value);');
-    script.lines.add('      end;');
-    script.lines.add('    end;');
-    script.lines.add('    FModel.DAO.SQL.Where(sql).OrderBy(aOrdem).&End.Find(FList);');
-    script.lines.add('  finally');
-    script.lines.add('    Item.Free;');
-    script.lines.add('  end;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Buscar(aSQL : string) : iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  try');
-    script.lines.add('    FModel.DAO.Find(aSQL, FList);');
-    script.lines.add('  except');
-    script.lines.add('  end;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.BindForm(aForm: TForm): iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  Clear;');
-    script.lines.add('  TSimpleRTTI<' + tabela + '>.New(nil).BindFormToClass(aForm, FEntidade);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.' + tabela + ': T' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := FEntidade;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Clear: iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  if Assigned(FEntidade) then');
-    script.lines.add('    Freeandnil(FEntidade);');
-    script.lines.add('  FEntidade := T' + tabela + '.Create;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('constructor TController' + tabela + '.Create;');
-    script.lines.add('begin');
-    script.lines.add('  FModel := TModel.New.' + tabela + ';');
-    script.lines.add('  FList := TObjectList<T' + tabela + '>.Create;');
-    script.lines.add('  FEntidade := T' + tabela + '.Create;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.DataSource(');
-    script.lines.add('  aDataSource: TDataSource): iController' + tabela +';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  FDataSource := aDataSource;');
-    script.lines.add('  FModel.DataSource(FDataSource);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.DataSource: TDataSource;');
-    script.lines.add('begin');
-    script.lines.add('  Result := FDataSource;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Delete: iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  try');
-    script.lines.add('    FModel.DAO.Delete(FEntidade);');
-    script.lines.add('  except');
-    script.lines.add('    raise Exception.Create(''Erro ao excluir o registro'');');
-    script.lines.add('  end;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('destructor TController' + tabela + '.Destroy;');
-    script.lines.add('begin');
-    script.lines.add('  if Assigned(FList) then');
-    script.lines.add('    Freeandnil(FList);');
-    script.lines.add('');
-    script.lines.add('  if Assigned(FEntidade) then');
-    script.lines.add('    Freeandnil(FEntidade);');
-    script.lines.add('');
-    script.lines.add('  inherited;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Insert: iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  FModel.DAO.Insert(FEntidade);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.List : TObjectList<T' + tabela + '>;');
-    script.lines.add('begin');
-    script.lines.add('  Result := FList;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('class function TController' + tabela + '.New: iController' + tabela +';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self.Create;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.ExecSQL(sql : string): iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  FModel.DAO.ExecSQL(sql);');
-    script.lines.add('  Result := Self;');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Update: iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  FModel.DAO.Update(FEntidade);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela + '.Ultimo(where : string) : iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := Self;');
-    script.lines.add('  if not Assigned(FEntidade) then');
-    script.lines.add('    Freeandnil(FEntidade);');
-    script.lines.add('  if where = '' then');
-    script.lines.add('    where := '' xxx_CODIGO = (select max(xxx_CODIGO) from ' + tabela +')'';');
-    script.lines.add('  FEntidade := FModel.DAO.Max(where);');
-    script.lines.add('end;');
-    script.lines.add('');
-
-    script.lines.add('function TController' + tabela +'.FromJsonObject(aJson : TJsonObject) : iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  FEntidade := TJson.JsonToObject<T' + tabela + '>(aJson);');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('end.');
-
-
-
-        if not DirectoryExists(edtPath.Text) then
-          CreateDir(edtPath.Text);
-        if not DirectoryExists(edtPath.Text + '\src') then
-          CreateDir(edtPath.Text + '\src');
-        script.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Controller.' + tabela + '.pas');
-
-    script.Lines.Clear;
-
-
-    script.lines.add('Model Interfaces');
-    script.lines.add('');
-    script.lines.add('function ' + tabela + ' : iModel' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('Model');
-    script.lines.add('');
-    script.lines.add('function ' + tabela + ' : iModel' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('function TModel.' + tabela +' : iModel' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := TModel' + tabela + '.New;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('');
-    script.lines.add('');
-    script.lines.add('Controller Interfaces');
-    script.lines.add('');
-    script.lines.add('function ' + tabela + ' : iController' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('Controller');
-    script.lines.add('');
-    script.lines.add('function ' + tabela + ' : iController' + tabela + ';');
-    script.lines.add('');
-    script.lines.add('function TController.' + tabela + ' : iController' + tabela + ';');
-    script.lines.add('begin');
-    script.lines.add('  Result := TController' + tabela + '.New;');
-    script.lines.add('end;');
-    script.lines.add('');
-    script.lines.add('');
-  end;
+  VEntidade := TMemo.Create(Self);
+  VController := TMemo.Create(Self);
+  VInterface := TMemo.Create(Self);
+  VModel := TMemo.Create(Self);
 end;
 
 procedure TfrmPrincipal.btn1Click(Sender: TObject);
-var
-I, J : integer;
-Campo, Tipo : string;
-PK : boolean;
-qryPK : TFDQuery;
 begin
-  FQuery := TFDQuery.Create(nil);
-  FQuery.Connection := FDConexao;
+  //Gera Entidade
+  if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+  if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+  if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+  if cheController.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
 
-  qryLista_Tabelas.First;
-  while not qryLista_Tabelas.Eof do
+  //Separado Por Pasta
+  if cheSeparaPasta.Checked then
   begin
-    Application.ProcessMessages;
-
-    if qryLista_TabelasOK.AsString = 'Sim' then
+    if cheVideo.Checked = false then
+    begin
+      //Entidade
+      if cheEntidade.Checked then
       begin
-        FQuery.Close;
-        FQuery.Open('SELECT * FROM ' + qryLista_TabelasTABELA.asString);
-
-        script.lines.Clear;
-
-        script.Lines.Add('unit ' + edtApp.Text + '.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + ';');
-        script.Lines.Add('');
-        script.Lines.Add('interface');
-        script.Lines.Add('');
-        script.Lines.Add('uses');
-        script.Lines.Add('  System.Generics.Collections, System.Classes, Rest.Json, System.JSON, SimpleAttributes;');
-        script.Lines.Add('');
-        script.Lines.Add('type');
-        script.Lines.Add('  [Tabela(' + QuotedStr(RemoveAcento(qryLista_TabelasTABELA.asString)) + ')]');
-        script.Lines.Add('  T' + RemoveAcento(qryLista_TabelasTABELA.asString) + ' = class');
-        script.Lines.Add('  private');
-
-        for I := 0 to FQuery.FieldCount -1 do
-        begin
-          if FQuery.Fields[i].ClassName = 'TIntegerField' then
-            Tipo := 'integer;'
-          else if FQuery.Fields[i].ClassName = 'TSmallintField' then
-            Tipo := 'integer;'
-          else if FQuery.Fields[i].ClassName = 'TLargeintField' then
-            Tipo := 'integer;'
-          else if FQuery.Fields[i].ClassName = 'TIBStringField' then
-            Tipo := 'string;'
-          else if FQuery.Fields[i].ClassName = 'TDateField' then
-            Tipo := 'TDate;'
-          else if FQuery.Fields[i].ClassName = 'TIBBCDField' then
-            Tipo := 'real;'
-          else if FQuery.Fields[i].ClassName = 'TFMTBCDField' then
-            Tipo := 'real;'
-          else if FQuery.Fields[i].ClassName = 'TCurrencyField' then
-            Tipo := 'real;'
-          else if FQuery.Fields[i].ClassName = 'TSingleField' then
-            Tipo := 'real;'
-          else if FQuery.Fields[i].ClassName = 'TStringField' then
-            Tipo := 'string;'
-          else
-            Tipo := 'string;'+ '   {' + FQuery.Fields[i].ClassName + '}';
-
-          script.Lines.Add('    F' + RemoveAcento(FQuery.Fields[i].FieldName) + ': ' + Tipo );
-        end;
-
-        script.Lines.Add('');
-        script.Lines.Add('  public');
-        script.Lines.Add('    constructor Create;');
-        script.Lines.Add('    destructor Destroy; override;');
-        script.Lines.Add('');
-        script.Lines.Add('  published');
-        script.Lines.Add('{verificar o se o campo й AutoInc}');
-        script.Lines.Add('{Exemplo: [Campo('+QuotedStr('NOME_CAMPO')+'), PK, AutoInc] }');
-        for I := 0 to FQuery.FieldCount -1 do
-        begin
-          //Verifica se й chave primaria
-          qryPK := TFDQuery.Create(nil);
-          qryPK.Connection := FDConexao;
-          qryPK.Open('SELECT ' +
-                     'A.attname ' +
-                     'FROM ' +
-                     'pg_index i ' +
-                     'JOIN pg_attribute A ON A.attrelid = i.indrelid ' +
-                     'AND A.attnum = ANY ( i.indkey ) ' +
-                     'WHERE ' +
-                     'i.indrelid = ' + QuotedStr(qryLista_TabelasTABELA.asString) + ' :: regclass ' +
-                     'AND attname = '+ QuotedStr(FQuery.Fields[i].FieldName) + ' ' +
-                     'AND i.indisprimary');
-
-          if not qryPK.IsEmpty then pk := True else pk := False;
-          qryPK.Free;
-
-          if FQuery.Fields[i].ClassName = 'TIntegerField' then
-            campo := 'integer'
-          else if FQuery.Fields[i].ClassName = 'TSmallintField' then
-            campo := 'integer'
-          else if FQuery.Fields[i].ClassName = 'TLargeintField' then
-            campo := 'integer'
-          else if FQuery.Fields[i].ClassName = 'TIBStringField' then
-            campo := 'string'
-          else if FQuery.Fields[i].ClassName = 'TDateField' then
-            campo := 'TDate'
-          else if FQuery.Fields[i].ClassName = 'TIBBCDField' then
-            campo := 'real'
-          else if FQuery.Fields[i].ClassName = 'TFMTBCDField' then
-            campo := 'real'
-          else if FQuery.Fields[i].ClassName = 'TCurrencyField' then
-            campo := 'real'
-          else if FQuery.Fields[i].ClassName = 'TSingleField' then
-            campo := 'real'
-          else if FQuery.Fields[i].ClassName = 'TStringField' then
-            campo := 'string'
-          else
-            campo := 'string';
-
-          if PK = True then
-            script.Lines.Add('    [Campo(' + quotedstr(RemoveAcento(FQuery.Fields[i].FieldName)) + '), PK]')
-          else
-            script.Lines.Add('    [Campo(' + quotedstr(RemoveAcento(FQuery.Fields[i].FieldName))+')]');
-
-          script.Lines.Add('    property ' + RemoveAcento(FQuery.Fields[i].FieldName)
-                                     +': ' + Tipo + ' read F' + RemoveAcento(FQuery.Fields[i].FieldName)
-                                     +' write F' + RemoveAcento(FQuery.Fields[i].FieldName) + ';');
-        end;
-
-        script.Lines.Add('');
-        script.Lines.Add('    function ToJSONObject: TJsonObject;');
-        script.Lines.Add('    function ToJsonString: string;');
-        script.Lines.Add('');
-        script.Lines.Add('  end;');
-        script.Lines.Add('');
-        script.Lines.Add('implementation');
-        script.Lines.Add('');
-        script.Lines.Add('constructor T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.Create;');
-        script.Lines.Add('begin');
-        script.Lines.Add('');
-        script.Lines.Add('end;');
-        script.Lines.Add('');
-        script.Lines.Add('destructor T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.Destroy;');
-        script.Lines.Add('begin');
-        script.Lines.Add('');
-        script.Lines.Add('  inherited;');
-        script.Lines.Add('end;');
-        script.Lines.Add('');
-        script.Lines.Add('function T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.ToJSONObject: TJsonObject;');
-        script.Lines.Add('begin');
-        script.Lines.Add('  Result := TJson.ObjectToJsonObject(Self);');
-        script.Lines.Add('end;');
-        script.Lines.Add('');
-        script.Lines.Add('function T'+RemoveAcento(qryLista_TabelasTABELA.asString)+'.ToJsonString: string;');
-        script.Lines.Add('begin');
-        script.Lines.Add('  result := TJson.ObjectToJsonString(self);');
-        script.Lines.Add('end;');
-        script.Lines.Add('');
-        script.Lines.Add('end.');
-
         if not DirectoryExists(edtPath.Text) then
           CreateDir(edtPath.Text);
         if not DirectoryExists(edtPath.Text + '\src') then
           CreateDir(edtPath.Text + '\src');
-        if not DirectoryExists(edtPath.Text + '\src\Entidades') then
-          CreateDir(edtPath.Text + '\src\Entidades');
-
-        script.Lines.SaveToFile(edtPath.Text + '\src\Entidades\' + edtApp.Text + '.Model.' + edtEntidade.Text + '.' + RemoveAcento(qryLista_TabelasTABELA.asString) + '.pas');
+        if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+          CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+        VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+      end;
+      //Interface
+      if cheInterface.Checked then
+      begin
 
       end;
-    qryLista_Tabelas.Next;
+      //Model
+      if cheModel.Checked then
+      begin
+
+      end;
+      //Controller
+      if cheController.Checked then
+      begin
+
+      end;
+    end;
+  end
+  else
+  //Todos na mesma pasta
+  begin
+    if cheVideo.Checked = false then
+    begin
+      //Entidade
+      if cheEntidade.Checked then
+      begin
+        if not DirectoryExists(edtPath.Text) then
+          CreateDir(edtPath.Text);
+        if not DirectoryExists(edtPath.Text + '\src') then
+          CreateDir(edtPath.Text + '\src');
+        VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+      end;
+      //Interface
+      if cheInterface.Checked then
+      begin
+
+      end;
+      //Model
+      if cheModel.Checked then
+      begin
+
+      end;
+      //Controller
+      if cheController.Checked then
+      begin
+
+      end;
+    end;
   end;
 
-  ShowMessage('Classes criadas com sucesso');
-end;
-
-procedure TfrmPrincipal.GerarController(aTableName: string);
-var
- path : string;
-begin
-  Path := edtPath.Text;
-  if not DirectoryExists(Path) then
-    ForceDirectories(Path);
-
-  Path := edtPath.Text + '/src';
-  if not DirectoryExists(Path) then
-    ForceDirectories(Path);
-
-
-  Path := Path + '/Controller';
-  if not DirectoryExists(Path) then
-    ForceDirectories(Path);
-
-  GerarClassController(Path, aTableName);
-end;
-
-procedure TfrmPrincipal.GerarClassController(aPath, aTableName : string);
-var
-  ArqController : TStringList;
-begin
-  ArqController := TStringList.Create;
-  try
-    ArqController.Add('unit ServerReact.Controller.' + aTableName + ';');
-    ArqController.Add('');
-    ArqController.Add('interface');
-    ArqController.Add('');
-    ArqController.Add('uses');
-    ArqController.Add('Horse,');
-    ArqController.Add('System.JSON,');
-    ArqController.Add('ServerReact.Model.DAOGeneric,');
-    ArqController.Add('ServerReact.Model.Entidades.' + aTableName + ';');
-    ArqController.Add('');
-    ArqController.Add('procedure Registry(App : THorse);');
-    ArqController.Add('procedure Get(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('procedure GetID(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('procedure Insert(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('procedure Update(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('procedure Delete(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('');
-    ArqController.Add('implementation');
-    ArqController.Add('');
-    ArqController.Add('procedure Registry(App : THorse);');
-    ArqController.Add('begin');
-    ArqController.Add('App.Get(''/' + LowerCase(aTableName) + ''', Get);');
-    ArqController.Add('App.Get(''/' + LowerCase(aTableName) + '/:id'', GetId);');
-    ArqController.Add('App.Post(''/' + LowerCase(aTableName)  + ''', Insert);');
-    ArqController.Add('App.Put(''/' + LowerCase(aTableName)  + '/:id'', Update);');
-    ArqController.Add('App.Delete(''/' + LowerCase(aTableName)  + '/:id'', Delete);');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('procedure Get(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('var');
-    ArqController.Add('FDAO : iDAOGeneric<T' + UpperCase(aTableName) + '>;');
-    ArqController.Add('begin');
-    ArqController.Add('FDAO := TDAOGeneric<T' + UpperCase(aTableName) + '>.New;');
-    ArqController.Add('Res.Send<TJsonArray>(FDAO.Find);');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('procedure GetID(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('var');
-    ArqController.Add('FDAO : iDAOGeneric<T' + UpperCase(aTableName) + '>;');
-    ArqController.Add('begin');
-    ArqController.Add('FDAO := TDAOGeneric<T' + UpperCase(aTableName) + '>.New;');
-    ArqController.Add('Res.Send<TJsonObject>(FDAO.Find(Req.Params.Items[''id'']));');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('procedure Insert(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('var');
-    ArqController.Add('FDAO : iDAOGeneric<' + UpperCase(aTableName) + '>;');
-    ArqController.Add('begin');
-    ArqController.Add('FDAO := TDAOGeneric<T' + UpperCase(aTableName) + '>.New;');
-    ArqController.Add('Res.Send<TJsonObject>(FDAO.Insert(Req.Body<TJsonObject>));');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('procedure Update(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('var');
-    ArqController.Add('FDAO : iDAOGeneric<T' + UpperCase(aTableName) + '>;');
-    ArqController.Add('begin');
-    ArqController.Add('FDAO := TDAOGeneric<T' + UpperCase(aTableName) + '>.New;');
-    ArqController.Add('Res.Send<TJsonObject>(FDAO.Update(Req.Body<TJsonObject>));');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('procedure Delete(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
-    ArqController.Add('var');
-    ArqController.Add('FDAO : iDAOGeneric<T' + UpperCase(aTableName) + '>;');
-    ArqController.Add('begin');
-    ArqController.Add('FDAO := TDAOGeneric<T' + UpperCase(aTableName) + '>.New;');
-    ArqController.Add('Res.Send<TJsonObject>(FDAO.Delete(''id'', Req.Params.Items[''id'']));');
-    ArqController.Add('end;');
-    ArqController.Add('');
-    ArqController.Add('end.');
-  finally
-    ArqController.SaveToFile(aPath + '/' + edtApp.Text + '.Controller.' + UpperCase(aTableName) + '.pas');
-    ArqController.Free;
-  end;
+  ShowMessage('Arquivos gerados com sucesso');
 end;
 
 end.

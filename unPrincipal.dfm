@@ -11,20 +11,21 @@ object frmPrincipal: TfrmPrincipal
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 1156
-    Height = 233
+    Height = 254
     Align = alTop
     BevelOuter = bvNone
     Color = cl3DDkShadow
     ParentBackground = False
     TabOrder = 0
     object cxGroupBox1: TcxGroupBox
-      Left = 563
+      Left = 562
       Top = 64
       Caption = 'Gerar'
       PanelStyle.OfficeBackgroundKind = pobkGradient
@@ -43,11 +44,11 @@ object frmPrincipal: TfrmPrincipal
       StyleDisabled.LookAndFeel.NativeStyle = False
       StyleDisabled.LookAndFeel.SkinName = 'Office2019Colorful'
       TabOrder = 0
-      Height = 158
+      Height = 181
       Width = 582
       object label235: TLabel
         Left = 58
-        Top = 52
+        Top = 75
         Width = 70
         Height = 16
         Caption = 'Nome App:'
@@ -75,28 +76,12 @@ object frmPrincipal: TfrmPrincipal
         ParentColor = False
         ParentFont = False
       end
-      object Label8: TLabel
-        Left = 345
-        Top = 52
-        Width = 68
-        Height = 16
-        Caption = 'Entidades:'
-        Color = clLime
-        Enabled = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object btn2: TcxButton
-        Left = 345
-        Top = 78
-        Width = 226
+      object btn1: TcxButton
+        Left = 394
+        Top = 118
+        Width = 153
         Height = 27
-        Caption = 'Gerar Model e Controller Selecionado'
+        Caption = 'Gerar Selecionado'
         Colors.Default = clGrayText
         Colors.DefaultText = clGrayText
         Colors.Normal = clGrayText
@@ -115,88 +100,75 @@ object frmPrincipal: TfrmPrincipal
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = btn2Click
-      end
-      object btn1: TcxButton
-        Left = 133
-        Top = 111
-        Width = 200
-        Height = 27
-        Caption = 'Criar Todas Classes Entidades'
-        Colors.Default = clGrayText
-        Colors.DefaultText = clGrayText
-        Colors.Normal = clGrayText
-        Colors.NormalText = clGrayText
-        Colors.Hot = clGrayText
-        Colors.HotText = clGrayText
-        Colors.Pressed = clGrayText
-        Colors.PressedText = clGrayText
-        Colors.Disabled = clGrayText
-        Colors.DisabledText = clGrayText
-        Enabled = False
-        TabOrder = 1
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
         OnClick = btn1Click
       end
       object edtApp: TcxTextEdit
         Left = 133
-        Top = 50
-        TabOrder = 2
-        Text = 'ReactServer'
+        Top = 73
+        TabOrder = 1
+        Text = 'ServerReact'
         Width = 200
       end
       object edtPath: TcxTextEdit
         Left = 133
         Top = 23
-        TabOrder = 3
+        TabOrder = 2
         Text = 'c:\Classes'
         Width = 438
       end
-      object edtEntidade: TcxTextEdit
-        Left = 418
+      object cheSeparaPasta: TCheckBox
+        Left = 134
         Top = 50
-        Enabled = False
-        TabOrder = 4
-        Text = 'Entidades'
-        Width = 153
+        Width = 235
+        Height = 17
+        Caption = 'Separar arquivos por pasta (Nome Tabela)'
+        Checked = True
+        State = cbChecked
+        TabOrder = 3
       end
-      object btn3: TcxButton
-        Left = 345
-        Top = 111
-        Width = 226
-        Height = 27
-        Caption = 'Gerar Todos os Models e Controllers'
-        Colors.Default = clGrayText
-        Colors.DefaultText = clGrayText
-        Colors.Normal = clGrayText
-        Colors.NormalText = clGrayText
-        Colors.Hot = clGrayText
-        Colors.HotText = clGrayText
-        Colors.Pressed = clGrayText
-        Colors.PressedText = clGrayText
-        Colors.Disabled = clGrayText
-        Colors.DisabledText = clGrayText
+      object cheEntidade: TCheckBox
+        Left = 134
+        Top = 100
+        Width = 67
+        Height = 17
+        Caption = 'Entidades'
+        Checked = True
+        State = cbChecked
+        TabOrder = 4
+      end
+      object cheController: TCheckBox
+        Left = 134
+        Top = 123
+        Width = 75
+        Height = 17
+        Caption = 'Controller'
         Enabled = False
         TabOrder = 5
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btn3Click
       end
-      object btn4: TcxButton
-        Left = 133
-        Top = 78
-        Width = 200
+      object cheModel: TCheckBox
+        Left = 207
+        Top = 123
+        Width = 43
+        Height = 17
+        Caption = 'Model'
+        Enabled = False
+        TabOrder = 6
+      end
+      object cheInterface: TCheckBox
+        Left = 264
+        Top = 123
+        Width = 74
+        Height = 17
+        Caption = 'Interfaces'
+        Enabled = False
+        TabOrder = 7
+      end
+      object btn2: TcxButton
+        Left = 394
+        Top = 70
+        Width = 153
         Height = 27
-        Caption = 'Criar Classe Entidade Selecionada'
+        Caption = 'Gerar Todos'
         Colors.Default = clGrayText
         Colors.DefaultText = clGrayText
         Colors.Normal = clGrayText
@@ -208,14 +180,32 @@ object frmPrincipal: TfrmPrincipal
         Colors.Disabled = clGrayText
         Colors.DisabledText = clGrayText
         Enabled = False
-        TabOrder = 6
+        TabOrder = 8
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        OnClick = btn4Click
+        OnClick = btn2Click
+      end
+      object cheVideo: TCheckBox
+        Left = 134
+        Top = 146
+        Width = 161
+        Height = 17
+        Caption = 'Gerar apenas em video'
+        TabOrder = 9
+      end
+      object cheAutoInc: TCheckBox
+        Left = 207
+        Top = 100
+        Width = 90
+        Height = 17
+        Caption = 'Gerar AutoInc'
+        Checked = True
+        State = cbChecked
+        TabOrder = 10
       end
     end
     object cxGroupBox2: TcxGroupBox
@@ -228,10 +218,10 @@ object frmPrincipal: TfrmPrincipal
       StyleDisabled.LookAndFeel.NativeStyle = False
       StyleDisabled.LookAndFeel.SkinName = 'Office2019Colorful'
       TabOrder = 1
-      Height = 158
+      Height = 178
       Width = 542
       object Label2: TLabel
-        Left = 22
+        Left = 39
         Top = 25
         Width = 59
         Height = 16
@@ -261,7 +251,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 12
+        Left = 29
         Top = 52
         Width = 69
         Height = 16
@@ -291,7 +281,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label6: TLabel
-        Left = 48
+        Left = 65
         Top = 79
         Width = 33
         Height = 16
@@ -306,7 +296,7 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
       object Label7: TLabel
-        Left = 141
+        Left = 158
         Top = 79
         Width = 49
         Height = 16
@@ -320,15 +310,30 @@ object frmPrincipal: TfrmPrincipal
         ParentColor = False
         ParentFont = False
       end
+      object Label8: TLabel
+        Left = 8
+        Top = 107
+        Width = 90
+        Height = 16
+        Caption = 'SchemaName:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
       object edtDriverID: TcxTextEdit
-        Left = 86
+        Left = 103
         Top = 23
         TabOrder = 0
         Text = 'PG'
         Width = 184
       end
       object edtUserName: TcxTextEdit
-        Left = 86
+        Left = 103
         Top = 50
         TabOrder = 1
         Text = 'postgres'
@@ -345,26 +350,26 @@ object frmPrincipal: TfrmPrincipal
         Left = 367
         Top = 50
         TabOrder = 3
-        Text = '1234'
+        Text = 'd@t@box1825'
         Width = 162
       end
       object edtServer: TcxTextEdit
-        Left = 195
+        Left = 212
         Top = 77
         TabOrder = 4
         Text = '192.168.2.150'
-        Width = 334
+        Width = 317
       end
       object edtPort: TcxTextEdit
-        Left = 86
+        Left = 103
         Top = 77
         TabOrder = 5
-        Text = '5432'
+        Text = '8152'
         Width = 48
       end
       object btnConectar: TcxButton
         Left = 416
-        Top = 109
+        Top = 131
         Width = 113
         Height = 27
         Caption = 'Conectar'
@@ -387,11 +392,18 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
         OnClick = btnConectarClick
       end
+      object edtSchemaName: TcxTextEdit
+        Left = 103
+        Top = 104
+        TabOrder = 7
+        Text = 'public'
+        Width = 426
+      end
     end
     object Panel3: TPanel
       Left = 11
       Top = 9
-      Width = 1134
+      Width = 1133
       Height = 46
       TabOrder = 2
       object Label9: TLabel
@@ -411,9 +423,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object grdGridTabelas: TcxGrid
     Left = 0
-    Top = 233
+    Top = 254
     Width = 265
-    Height = 432
+    Height = 411
     Align = alLeft
     TabOrder = 1
     object grdGridTabelasView: TcxGridDBTableView
@@ -476,9 +488,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object Panel2: TPanel
     Left = 265
-    Top = 233
+    Top = 254
     Width = 10
-    Height = 432
+    Height = 411
     Align = alLeft
     BevelOuter = bvNone
     Color = cl3DDkShadow
@@ -487,10 +499,11 @@ object frmPrincipal: TfrmPrincipal
   end
   object script: TcxMemo
     Left = 275
-    Top = 233
+    Top = 254
     Align = alClient
+    Properties.ScrollBars = ssVertical
     TabOrder = 3
-    Height = 432
+    Height = 411
     Width = 881
   end
   object FDConexao: TFDConnection
@@ -508,62 +521,13 @@ object frmPrincipal: TfrmPrincipal
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
     LoginPrompt = False
-    Left = 754
-    Top = 248
-  end
-  object qryLista_Campos: TFDQuery
-    CachedUpdates = True
-    Connection = FDConexao
-    FetchOptions.AssignedValues = [evRecsMax, evDetailCascade, evDetailServerCascade]
-    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate, uvGeneratorName, uvCheckRequired]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.KeyFields = 'COLUNA'
-    SQL.Strings = (
-      'SELECT'
-      '        a.attname as "COLUNA",'
-      
-        '        pg_catalog.format_type(a.atttypid, a.atttypmod) as "TIPO' +
-        '"'
-      '    FROM'
-      '        pg_catalog.pg_attribute a'
-      '    WHERE'
-      '        a.attnum > 0'
-      '        AND NOT a.attisdropped'
-      '        AND a.attrelid = ('
-      '            SELECT c.oid'
-      '            FROM pg_catalog.pg_class c'
-      
-        '                LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c' +
-        '.relnamespace'
-      '            WHERE c.relname = '#39'CAD_CEST'#39
-      '                AND pg_catalog.pg_table_is_visible(c.oid)'
-      '        )'
-      #9)
-    Left = 750
-    Top = 405
-    object qryLista_CamposCOLUNA: TWideStringField
-      FieldName = 'COLUNA'
-      Origin = '"COLUNA"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Size = 64
-    end
-    object qryLista_CamposTIPO: TWideMemoField
-      AutoGenerateValue = arDefault
-      FieldName = 'TIPO'
-      Origin = '"TIPO"'
-      ReadOnly = True
-      BlobType = ftWideMemo
-    end
-  end
-  object dsLista_Campos: TDataSource
-    DataSet = qryLista_Campos
-    Left = 752
-    Top = 464
+    Left = 1034
+    Top = 336
   end
   object dsLista_Tabelas: TDataSource
     DataSet = qryLista_Tabelas
-    Left = 752
-    Top = 352
+    Left = 1032
+    Top = 440
   end
   object qryLista_Tabelas: TFDQuery
     CachedUpdates = True
@@ -581,8 +545,8 @@ object frmPrincipal: TfrmPrincipal
       'WHERE table_schema = '#39'public'#39
       'ORDER BY'
       '   TABELA ASC')
-    Left = 750
-    Top = 301
+    Left = 1030
+    Top = 389
     object qryLista_TabelasTABELA: TWideStringField
       FieldName = 'TABELA'
       Origin = '"TABELA"'
@@ -599,5 +563,66 @@ object frmPrincipal: TfrmPrincipal
   object dsCFG_Geral: TDataSource
     Left = 1067
     Top = 712
+  end
+  object FDMIQ: TFDMetaInfoQuery
+    Connection = FDConexao
+    MetaInfoKind = mkTableFields
+    CatalogName = 'box'
+    ObjectName = 'CAD_USUARIO'
+    Left = 1032
+    Top = 272
+    object FDMIQRECNO: TIntegerField
+      FieldName = 'RECNO'
+      ReadOnly = True
+    end
+    object FDMIQCATALOG_NAME: TWideStringField
+      FieldName = 'CATALOG_NAME'
+      ReadOnly = True
+      Size = 128
+    end
+    object FDMIQSCHEMA_NAME: TWideStringField
+      FieldName = 'SCHEMA_NAME'
+      ReadOnly = True
+      Size = 128
+    end
+    object FDMIQTABLE_NAME: TWideStringField
+      FieldName = 'TABLE_NAME'
+      ReadOnly = True
+      Size = 128
+    end
+    object FDMIQCOLUMN_NAME: TWideStringField
+      FieldName = 'COLUMN_NAME'
+      ReadOnly = True
+      Size = 128
+    end
+    object FDMIQCOLUMN_POSITION: TIntegerField
+      FieldName = 'COLUMN_POSITION'
+      ReadOnly = True
+    end
+    object FDMIQCOLUMN_DATATYPE: TIntegerField
+      FieldName = 'COLUMN_DATATYPE'
+      ReadOnly = True
+    end
+    object FDMIQCOLUMN_TYPENAME: TWideStringField
+      FieldName = 'COLUMN_TYPENAME'
+      ReadOnly = True
+      Size = 128
+    end
+    object FDMIQCOLUMN_ATTRIBUTES: TLongWordField
+      FieldName = 'COLUMN_ATTRIBUTES'
+      ReadOnly = True
+    end
+    object FDMIQCOLUMN_PRECISION: TIntegerField
+      FieldName = 'COLUMN_PRECISION'
+      ReadOnly = True
+    end
+    object FDMIQCOLUMN_SCALE: TIntegerField
+      FieldName = 'COLUMN_SCALE'
+      ReadOnly = True
+    end
+    object FDMIQCOLUMN_LENGTH: TIntegerField
+      FieldName = 'COLUMN_LENGTH'
+      ReadOnly = True
+    end
   end
 end
