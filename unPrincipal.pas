@@ -12,14 +12,7 @@ uses
   cxDBEdit, cxMaskEdit, cxButtonEdit, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
   dxSkinGlassOceans, dxSkinHighContrast, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
   dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
-  dxSkinOffice2019Colorful, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008,
-     GeradorSimpleORM.Model.Gerador.ModelGeradorClasse,
-     GeradorSimpleORM.Model.Conexoes.Metainfoquery,
-     GeradorSimpleORM.Model.Conexoes.ConexaoFiredac,
-     GeradorSimpleORM.Model.Conexoes.Factory.Conexao,
-     GeradorSimpleORM.Model.Conexoes.Interfaces,
-     GeradorSimpleORM.Model.Conexoes.TableFiredac,
-     GeradorSimpleORM.Model.Gerador.Interfaces;
+  dxSkinOffice2019Colorful, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008;
 
 type
   TfrmPrincipal = class(TForm)
@@ -82,19 +75,24 @@ type
     edtSchemaName: TcxTextEdit;
     Label8: TLabel;
     cheAutoInc: TCheckBox;
+    PopupMenu1: TPopupMenu;
+    SelecionarTodos1: TMenuItem;
+    DesmarcarTodos1: TMenuItem;
     procedure btnConectarClick(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btn2Click(Sender: TObject);
+    procedure SelecionarTodos1Click(Sender: TObject);
+    procedure DesmarcarTodos1Click(Sender: TObject);
   private
     procedure Conecta_Bancos;
     procedure Gera_Entidade(aTable: string);
 
     procedure Gera_Interface(aTable: string);
-    procedure Gera_Controller(aTable: string);
     procedure Gera_Model(aTable: string);
 
     procedure Verifica_AutoInc(autoIncField : string);
+    procedure Gera_Controller(aTableName: string);
     { Private declarations }
   public
     { Public declarations }
@@ -113,9 +111,6 @@ var
   FTableName: String;
   FUnitName: String;
   FTipoCampo: String;
-  FConexao: iModelConexao;
-  FListaTabela: iModelMetaInfoQuery;
-  FListaFields: iModelMetaInfoQuery;
   FProjeto: String;
 
   VAutoInc : Boolean;
@@ -125,14 +120,11 @@ var
   VInterface : TMemo;
   VModel : TMemo;
 
+  SeqField : string;
+
 implementation
 
 {$R *.dfm}
-
-procedure TfrmPrincipal.Gera_Controller(aTable: string);
-begin
-
-end;
 
 procedure TfrmPrincipal.Gera_Entidade(aTable : string);
 var
@@ -226,13 +218,16 @@ begin
     begin
       if FPK[I].Trim.ToUpper = FDMIQ.FieldByName('COLUMN_NAME').AsString.Trim.ToUpper then
       begin
-
+        SeqField := '';
         VAutoInc := False;
 
         if cheAutoInc.Checked then Verifica_AutoInc(FDMIQ.FieldByName('COLUMN_NAME').AsString);
 
         if VAutoInc = True then
-          MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + '), PK, AutoInc]'
+        begin
+          SeqField := FDMIQ.FieldByName('COLUMN_NAME').AsString;
+          MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + '), PK, AutoInc]';
+        end
         else
           MPK := '    [Campo(' + UpperCase(FDMIQ.FieldByName('COLUMN_NAME').AsString.QuotedString) + '), PK, ]';
 
@@ -329,6 +324,19 @@ begin
 
 end;
 
+procedure TfrmPrincipal.SelecionarTodos1Click(Sender: TObject);
+begin
+  qryLista_Tabelas.First;
+  while not qryLista_Tabelas.Eof do
+    begin
+      qryLista_tabelas.Edit;
+      qryLista_TabelasOK.asString := 'Sim';
+      qryLista_tabelas.Post;
+
+      qryLista_tabelas.Next;
+    end;
+end;
+
 procedure TfrmPrincipal.Verifica_AutoInc(autoIncField : string);
 var
   FClasse: TStringList;
@@ -395,6 +403,19 @@ begin
     end;
 end;
 
+procedure TfrmPrincipal.DesmarcarTodos1Click(Sender: TObject);
+begin
+  qryLista_Tabelas.First;
+  while not qryLista_Tabelas.Eof do
+    begin
+      qryLista_tabelas.Edit;
+      qryLista_TabelasOK.asString := 'Não';
+      qryLista_tabelas.Post;
+
+      qryLista_tabelas.Next;
+    end;
+end;
+
 procedure TfrmPrincipal.btn2Click(Sender: TObject);
 begin
   qryLista_Tabelas.First;
@@ -404,9 +425,10 @@ begin
         begin
           //Gera Entidade
           if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-          if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-          if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-          if cheController.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+          if cheController.Checked then Gera_Controller(qryLista_TabelasTABELA.AsString);
+
+//          if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+//          if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
 
           //Separado Por Pasta
           if cheSeparaPasta.Checked then
@@ -424,6 +446,17 @@ begin
                   CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
                 VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
               end;
+              //Controller
+              if cheController.Checked then
+              begin
+                if not DirectoryExists(edtPath.Text) then
+                  CreateDir(edtPath.Text);
+                if not DirectoryExists(edtPath.Text + '\src') then
+                  CreateDir(edtPath.Text + '\src');
+                if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+                  CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+                VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+              end;
               //Interface
               if cheInterface.Checked then
               begin
@@ -431,11 +464,6 @@ begin
               end;
               //Model
               if cheModel.Checked then
-              begin
-
-              end;
-              //Controller
-              if cheController.Checked then
               begin
 
               end;
@@ -455,6 +483,15 @@ begin
                   CreateDir(edtPath.Text + '\src');
                 VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
               end;
+              //Controller
+              if cheController.Checked then
+              begin
+                if not DirectoryExists(edtPath.Text) then
+                  CreateDir(edtPath.Text);
+                if not DirectoryExists(edtPath.Text + '\src') then
+                  CreateDir(edtPath.Text + '\src');
+                VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+              end;
               //Interface
               if cheInterface.Checked then
               begin
@@ -462,11 +499,6 @@ begin
               end;
               //Model
               if cheModel.Checked then
-              begin
-
-              end;
-              //Controller
-              if cheController.Checked then
               begin
 
               end;
@@ -487,13 +519,102 @@ begin
   VModel := TMemo.Create(Self);
 end;
 
+procedure TfrmPrincipal.Gera_Controller(aTableName : string);
+var
+  ArqController : TStringList;
+begin
+  ArqController := TStringList.Create;
+  try
+    ArqController.Add('unit ServerReact.Controller.' + aTableName.toUpper + ';');
+    ArqController.Add('');
+    ArqController.Add('interface');
+    ArqController.Add('');
+    ArqController.Add('uses');
+    ArqController.Add('Horse,');
+    ArqController.Add('System.JSON,');
+    ArqController.Add('ServerReact.Model.DAOGeneric,');
+    ArqController.Add('ServerReact.Model.Entidades.' + aTableName.toUpper + ';');
+    ArqController.Add('');
+    ArqController.Add('procedure Registry(App : THorse);');
+    ArqController.Add('procedure Get(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('procedure GetID(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('procedure Insert(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('procedure Update(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('procedure Delete(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('');
+    ArqController.Add('implementation');
+    ArqController.Add('');
+    ArqController.Add('procedure Registry(App : THorse);');
+    ArqController.Add('begin');
+    ArqController.Add('  App.Get(''/' + LowerCase(aTableName) + ''', Get);');
+    ArqController.Add('  App.Get(''/' + LowerCase(aTableName) + '/:id'', GetId);');
+    ArqController.Add('  App.Post(''/' + LowerCase(aTableName)  + ''', Insert);');
+    ArqController.Add('  App.Put(''/' + LowerCase(aTableName)  + '/:id'', Update);');
+    ArqController.Add('  App.Delete(''/' + LowerCase(aTableName)  + '/:id'', Delete);');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('procedure Get(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('var');
+    ArqController.Add('  FDAO : iDAOGeneric<T' + aTableName.toUpper + '>;');
+    ArqController.Add('begin');
+    ArqController.Add('  FDAO := TDAOGeneric<T' + aTableName.toUpper + '>.New;');
+    ArqController.Add('  Res.Send<TJsonArray>(FDAO.Find);');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('procedure GetID(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('var');
+    ArqController.Add('  FDAO : iDAOGeneric<T' + aTableName.toUpper + '>;');
+    ArqController.Add('begin');
+    ArqController.Add('  FDAO := TDAOGeneric<T' + aTableName.toUpper + '>.New;');
+    ArqController.Add('  Res.Send<TJsonObject>(FDAO.Find(Req.Params.Items[''id'']));');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('procedure Insert(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('var');
+    ArqController.Add('  FDAO : iDAOGeneric<T' + aTableName.toUpper + '>;');
+    ArqController.Add('begin');
+    ArqController.Add('  FDAO := TDAOGeneric<T' + aTableName.toUpper + '>.New;');
+    ArqController.Add('  Res.Send<TJsonObject>(FDAO.Insert(Req.Body<TJsonObject>));');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('procedure Update(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('var');
+    ArqController.Add('  FDAO : iDAOGeneric<T' + aTableName.toUpper + '>;');
+    ArqController.Add('begin');
+    ArqController.Add('  FDAO := TDAOGeneric<T' + aTableName.toUpper + '>.New;');
+    ArqController.Add('  Res.Send<TJsonObject>(FDAO.Update(Req.Body<TJsonObject>));');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('procedure Delete(Req: THorseRequest; Res: THorseResponse; Next: TProc);');
+    ArqController.Add('var');
+    ArqController.Add('  FDAO : iDAOGeneric<T' + aTableName.toUpper + '>;');
+    ArqController.Add('begin');
+    ArqController.Add('  FDAO := TDAOGeneric<T' + aTableName.toUpper + '>.New;');
+    if SeqField = '' then
+    ArqController.Add('  Res.Send<TJsonObject>(FDAO.Delete(''{ Colocar Campo ID Correto }'', Req.Params.Items[''id'']));')
+    else
+    ArqController.Add('  Res.Send<TJsonObject>(FDAO.Delete(''' + SeqField + ''', Req.Params.Items[''id'']));');
+    ArqController.Add('end;');
+    ArqController.Add('');
+    ArqController.Add('end.');
+  finally
+    if script.Text <> '' then script.Lines.Add('');
+    script.Text := script.Text + ArqController.Text;
+    VController.Text := ArqController.Text;
+    ArqController.Free;
+  end;
+end;
+
 procedure TfrmPrincipal.btn1Click(Sender: TObject);
 begin
   //Gera Entidade
   if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-  if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-  if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-  if cheController.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+  if cheController.Checked then Gera_Controller(qryLista_TabelasTABELA.AsString);
+
+//  if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+
+//  if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+
 
   //Separado Por Pasta
   if cheSeparaPasta.Checked then
@@ -511,6 +632,17 @@ begin
           CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
         VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
       end;
+      //Controller
+      if cheController.Checked then
+      begin
+        if not DirectoryExists(edtPath.Text) then
+          CreateDir(edtPath.Text);
+        if not DirectoryExists(edtPath.Text + '\src') then
+          CreateDir(edtPath.Text + '\src');
+        if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+          CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+        VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+      end;
       //Interface
       if cheInterface.Checked then
       begin
@@ -518,11 +650,6 @@ begin
       end;
       //Model
       if cheModel.Checked then
-      begin
-
-      end;
-      //Controller
-      if cheController.Checked then
       begin
 
       end;
@@ -542,6 +669,15 @@ begin
           CreateDir(edtPath.Text + '\src');
         VEntidade.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Model.Entidades.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
       end;
+      //Controller
+      if cheController.Checked then
+      begin
+        if not DirectoryExists(edtPath.Text) then
+          CreateDir(edtPath.Text);
+        if not DirectoryExists(edtPath.Text + '\src') then
+          CreateDir(edtPath.Text + '\src');
+        VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
+      end;
       //Interface
       if cheInterface.Checked then
       begin
@@ -549,11 +685,6 @@ begin
       end;
       //Model
       if cheModel.Checked then
-      begin
-
-      end;
-      //Controller
-      if cheController.Checked then
       begin
 
       end;

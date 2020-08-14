@@ -142,7 +142,8 @@ object frmPrincipal: TfrmPrincipal
         Width = 75
         Height = 17
         Caption = 'Controller'
-        Enabled = False
+        Checked = True
+        State = cbChecked
         TabOrder = 5
       end
       object cheModel: TCheckBox
@@ -429,6 +430,7 @@ object frmPrincipal: TfrmPrincipal
     Align = alLeft
     TabOrder = 1
     object grdGridTabelasView: TcxGridDBTableView
+      PopupMenu = PopupMenu1
       Navigator.Buttons.CustomButtons = <>
       Navigator.Buttons.First.Hint = 'Primeiro Registro'
       Navigator.Buttons.First.ImageIndex = 12
@@ -503,6 +505,8 @@ object frmPrincipal: TfrmPrincipal
     Align = alClient
     Properties.ScrollBars = ssVertical
     TabOrder = 3
+    ExplicitLeft = 281
+    ExplicitTop = 251
     Height = 411
     Width = 881
   end
@@ -623,6 +627,18 @@ object frmPrincipal: TfrmPrincipal
     object FDMIQCOLUMN_LENGTH: TIntegerField
       FieldName = 'COLUMN_LENGTH'
       ReadOnly = True
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 328
+    Top = 408
+    object SelecionarTodos1: TMenuItem
+      Caption = 'Marcar Todos'
+      OnClick = SelecionarTodos1Click
+    end
+    object DesmarcarTodos1: TMenuItem
+      Caption = 'Desmarcar Todos'
+      OnClick = DesmarcarTodos1Click
     end
   end
 end
