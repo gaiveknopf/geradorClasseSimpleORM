@@ -351,7 +351,6 @@ object frmPrincipal: TfrmPrincipal
         Left = 367
         Top = 50
         TabOrder = 3
-        Text = 'd@t@box1825'
         Width = 162
       end
       object edtServer: TcxTextEdit

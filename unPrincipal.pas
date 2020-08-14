@@ -611,9 +611,9 @@ begin
   if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
   if cheController.Checked then Gera_Controller(qryLista_TabelasTABELA.AsString);
 
-//  if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+//  if cheModel.Checked then Gera_Model(qryLista_TabelasTABELA.AsString);
 
-//  if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
+//  if cheInterface.Checked then Gera_Interface(qryLista_TabelasTABELA.AsString);
 
 
   //Separado Por Pasta
