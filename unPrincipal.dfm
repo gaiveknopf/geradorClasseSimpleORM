@@ -34,15 +34,15 @@ object frmPrincipal: TfrmPrincipal
       Style.BorderColor = clSkyBlue
       Style.BorderStyle = ebsFlat
       Style.Color = clYellow
-      Style.LookAndFeel.Kind = lfOffice11
+      Style.LookAndFeel.Kind = lfUltraFlat
       Style.LookAndFeel.NativeStyle = False
-      Style.LookAndFeel.SkinName = 'Office2019Colorful'
+      Style.LookAndFeel.SkinName = 'UserSkin'
       Style.Shadow = False
       Style.TransparentBorder = True
       StyleDisabled.BorderColor = clHotLight
-      StyleDisabled.LookAndFeel.Kind = lfOffice11
+      StyleDisabled.LookAndFeel.Kind = lfUltraFlat
       StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.SkinName = 'Office2019Colorful'
+      StyleDisabled.LookAndFeel.SkinName = 'UserSkin'
       TabOrder = 0
       Height = 181
       Width = 582
@@ -215,10 +215,11 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Configura'#231#245'es de Conex'#227'o'
       Style.BorderStyle = ebsNone
       Style.LookAndFeel.NativeStyle = False
-      Style.LookAndFeel.SkinName = 'Office2019Colorful'
+      Style.LookAndFeel.SkinName = 'UserSkin'
       StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.SkinName = 'Office2019Colorful'
+      StyleDisabled.LookAndFeel.SkinName = 'UserSkin'
       TabOrder = 1
+      Transparent = True
       Height = 178
       Width = 542
       object Label2: TLabel
@@ -351,6 +352,7 @@ object frmPrincipal: TfrmPrincipal
         Left = 367
         Top = 50
         TabOrder = 3
+        Text = 'd@t@box1825'
         Width = 162
       end
       object edtServer: TcxTextEdit
@@ -504,8 +506,6 @@ object frmPrincipal: TfrmPrincipal
     Align = alClient
     Properties.ScrollBars = ssVertical
     TabOrder = 3
-    ExplicitLeft = 281
-    ExplicitTop = 251
     Height = 411
     Width = 881
   end
