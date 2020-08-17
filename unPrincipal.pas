@@ -20,36 +20,9 @@ type
     Panel1: TPanel;
     dsLista_Tabelas: TDataSource;
     qryLista_Tabelas: TFDQuery;
-    grdGridTabelas: TcxGrid;
-    grdGridTabelasView: TcxGridDBTableView;
-    grdGridTabelasPrimeiroNivel: TcxGridLevel;
     Panel2: TPanel;
-    script: TcxMemo;
-    cxGroupBox1: TcxGroupBox;
-    label235: TLabel;
-    cxGroupBox2: TcxGroupBox;
-    btn1: TcxButton;
     dsCFG_Geral: TDataSource;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
-    Label7: TLabel;
-    edtDriverID: TcxTextEdit;
-    edtUserName: TcxTextEdit;
-    edtDatabase: TcxTextEdit;
-    edtPassword: TcxTextEdit;
-    edtServer: TcxTextEdit;
-    edtPort: TcxTextEdit;
-    btnConectar: TcxButton;
     qryLista_TabelasTABELA: TWideStringField;
-    grdGridTabelasViewTABELA: TcxGridDBColumn;
-    edtApp: TcxTextEdit;
-    Label1: TLabel;
-    edtPath: TcxTextEdit;
-    qryLista_TabelasOK: TWideStringField;
-    grdGridTabelasViewOK: TcxGridDBColumn;
     Panel3: TPanel;
     Label9: TLabel;
     FDMIQ: TFDMetaInfoQuery;
@@ -65,25 +38,52 @@ type
     FDMIQCOLUMN_PRECISION: TIntegerField;
     FDMIQCOLUMN_SCALE: TIntegerField;
     FDMIQCOLUMN_LENGTH: TIntegerField;
-    cheSeparaPasta: TCheckBox;
-    cheEntidade: TCheckBox;
-    cheController: TCheckBox;
-    cheModel: TCheckBox;
-    cheInterface: TCheckBox;
-    btn2: TcxButton;
-    cheVideo: TCheckBox;
-    edtSchemaName: TcxTextEdit;
-    Label8: TLabel;
-    cheAutoInc: TCheckBox;
     PopupMenu1: TPopupMenu;
     SelecionarTodos1: TMenuItem;
     DesmarcarTodos1: TMenuItem;
+    DBGrid1: TDBGrid;
+    qryLista_TabelasOK: TWideMemoField;
+    MemVideo: TMemo;
+    GroupBox1: TGroupBox;
+    Label2: TLabel;
+    Label4: TLabel;
+    Label6: TLabel;
+    Label8: TLabel;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label7: TLabel;
+    edtDriverID: TEdit;
+    edtDatabase: TEdit;
+    edtUserName: TEdit;
+    edtPassword: TEdit;
+    edtPort: TEdit;
+    edtServer: TEdit;
+    edtSchemaName: TEdit;
+    btnConectar: TButton;
+    GroupBox2: TGroupBox;
+    Label10: TLabel;
+    Label11: TLabel;
+    btn2: TButton;
+    edtPath: TEdit;
+    edtApp: TEdit;
+    cheSeparaPasta: TCheckBox;
+    cheEntidade: TCheckBox;
+    cheAutoInc: TCheckBox;
+    cheController: TCheckBox;
+    cheModel: TCheckBox;
+    cheInterface: TCheckBox;
+    cheVideo: TCheckBox;
+    btn1: TButton;
     procedure btnConectarClick(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btn2Click(Sender: TObject);
     procedure SelecionarTodos1Click(Sender: TObject);
     procedure DesmarcarTodos1Click(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure DBGrid1ColEnter(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure qryLista_TabelasOKGetText(Sender: TField; var Text: string; DisplayText: Boolean);
   private
     procedure Conecta_Bancos;
     procedure Gera_Entidade(aTable: string);
@@ -308,7 +308,7 @@ begin
 
   VEntidade.Text := FClasse.Text;
 
-  script.Text := FClasse.Text;
+  MemVideo.Text := FClasse.Text;
 
   FDMIQ.Active := False;
 end;
@@ -324,13 +324,18 @@ begin
 
 end;
 
+procedure TfrmPrincipal.qryLista_TabelasOKGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+begin
+ Text := EmptyStr;
+end;
+
 procedure TfrmPrincipal.SelecionarTodos1Click(Sender: TObject);
 begin
   qryLista_Tabelas.First;
   while not qryLista_Tabelas.Eof do
     begin
       qryLista_tabelas.Edit;
-      qryLista_TabelasOK.asString := 'Sim';
+      qryLista_TabelasOK.asString := '1';
       qryLista_tabelas.Post;
 
       qryLista_tabelas.Next;
@@ -403,13 +408,60 @@ begin
     end;
 end;
 
+procedure TfrmPrincipal.DBGrid1CellClick(Column: TColumn);
+begin
+  if(UpperCase(Column.FieldName) = 'OK') then
+  begin
+    qryLista_Tabelas.Edit;
+    if(qryLista_Tabelas.FieldByName('OK').AsInteger = 1) then
+    begin
+      qryLista_Tabelas.FieldByName('OK').AsInteger := 0;
+    end
+    else
+    begin
+      qryLista_Tabelas.FieldByName('OK').AsInteger := 1;
+    end;
+   qryLista_Tabelas.Post;
+  end;
+end;
+
+procedure TfrmPrincipal.DBGrid1ColEnter(Sender: TObject);
+begin
+  if UpperCase(TDBGrid(Sender).SelectedField.FieldName) = 'OK' then
+    TDBGrid(Sender).Options := TDBGrid(Sender).Options - [dgEditing]
+  else
+    TDBGrid(Sender).Options := TDBGrid(Sender).Options + [dgEditing];
+end;
+
+procedure TfrmPrincipal.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+ var
+  Check: Integer;
+  R: TRect;
+begin
+  if ((Sender as TDBGrid).DataSource.Dataset.IsEmpty) then
+    Exit;
+
+  if(UpperCase(Column.FieldName) = 'OK') then
+  begin
+    TDBGrid(Sender).Canvas.FillRect(Rect);
+    if (TDBGrid(Sender).DataSource.DataSet.FieldByName('OK').AsInteger = 1) then
+      Check := DFCS_CHECKED
+    else
+      Check := 0;
+    R := Rect;
+    InflateRect(R, -2, -2);
+    DrawFrameControl(TDBGrid(Sender).Canvas.Handle, R, DFC_BUTTON,
+      DFCS_BUTTONCHECK or Check);
+  end;
+end;
+
 procedure TfrmPrincipal.DesmarcarTodos1Click(Sender: TObject);
 begin
   qryLista_Tabelas.First;
   while not qryLista_Tabelas.Eof do
     begin
       qryLista_tabelas.Edit;
-      qryLista_TabelasOK.asString := 'Não';
+      qryLista_TabelasOK.asString := '0';
       qryLista_tabelas.Post;
 
       qryLista_tabelas.Next;
@@ -421,7 +473,7 @@ begin
   qryLista_Tabelas.First;
   while not qryLista_Tabelas.Eof do
     begin
-      if qryLista_TabelasOK.asString = 'Sim' then
+      if qryLista_TabelasOK.asString = '1' then
         begin
           //Gera Entidade
           if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
@@ -598,8 +650,8 @@ begin
     ArqController.Add('');
     ArqController.Add('end.');
   finally
-    if script.Text <> '' then script.Lines.Add('');
-    script.Text := script.Text + ArqController.Text;
+    if MemVideo.Text <> '' then MemVideo.Lines.Add('');
+    MemVideo.Text := MemVideo.Text + ArqController.Text;
     VController.Text := ArqController.Text;
     ArqController.Free;
   end;

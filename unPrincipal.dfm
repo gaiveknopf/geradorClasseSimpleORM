@@ -18,396 +18,18 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 0
     Width = 1156
-    Height = 254
+    Height = 273
     Align = alTop
     BevelOuter = bvNone
     Color = cl3DDkShadow
     ParentBackground = False
     TabOrder = 0
-    object cxGroupBox1: TcxGroupBox
-      Left = 562
-      Top = 64
-      Caption = 'Gerar'
-      PanelStyle.OfficeBackgroundKind = pobkGradient
-      ParentBackground = False
-      ParentColor = False
-      Style.BorderColor = clSkyBlue
-      Style.BorderStyle = ebsFlat
-      Style.Color = clYellow
-      Style.LookAndFeel.Kind = lfUltraFlat
-      Style.LookAndFeel.NativeStyle = False
-      Style.LookAndFeel.SkinName = 'UserSkin'
-      Style.Shadow = False
-      Style.TransparentBorder = True
-      StyleDisabled.BorderColor = clHotLight
-      StyleDisabled.LookAndFeel.Kind = lfUltraFlat
-      StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.SkinName = 'UserSkin'
-      TabOrder = 0
-      Height = 181
-      Width = 582
-      object label235: TLabel
-        Left = 58
-        Top = 75
-        Width = 70
-        Height = 16
-        Caption = 'Nome App:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label1: TLabel
-        Left = 7
-        Top = 25
-        Width = 121
-        Height = 16
-        Caption = 'Caminho Arquivos:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object btn1: TcxButton
-        Left = 394
-        Top = 118
-        Width = 153
-        Height = 27
-        Caption = 'Gerar Selecionado'
-        Colors.Default = clGrayText
-        Colors.DefaultText = clGrayText
-        Colors.Normal = clGrayText
-        Colors.NormalText = clGrayText
-        Colors.Hot = clGrayText
-        Colors.HotText = clGrayText
-        Colors.Pressed = clGrayText
-        Colors.PressedText = clGrayText
-        Colors.Disabled = clGrayText
-        Colors.DisabledText = clGrayText
-        Enabled = False
-        TabOrder = 0
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btn1Click
-      end
-      object edtApp: TcxTextEdit
-        Left = 133
-        Top = 73
-        TabOrder = 1
-        Text = 'ServerReact'
-        Width = 200
-      end
-      object edtPath: TcxTextEdit
-        Left = 133
-        Top = 23
-        TabOrder = 2
-        Text = 'c:\Classes'
-        Width = 438
-      end
-      object cheSeparaPasta: TCheckBox
-        Left = 134
-        Top = 50
-        Width = 235
-        Height = 17
-        Caption = 'Separar arquivos por pasta (Nome Tabela)'
-        Checked = True
-        State = cbChecked
-        TabOrder = 3
-      end
-      object cheEntidade: TCheckBox
-        Left = 134
-        Top = 100
-        Width = 67
-        Height = 17
-        Caption = 'Entidades'
-        Checked = True
-        State = cbChecked
-        TabOrder = 4
-      end
-      object cheController: TCheckBox
-        Left = 134
-        Top = 123
-        Width = 75
-        Height = 17
-        Caption = 'Controller'
-        Checked = True
-        State = cbChecked
-        TabOrder = 5
-      end
-      object cheModel: TCheckBox
-        Left = 207
-        Top = 123
-        Width = 43
-        Height = 17
-        Caption = 'Model'
-        Enabled = False
-        TabOrder = 6
-      end
-      object cheInterface: TCheckBox
-        Left = 264
-        Top = 123
-        Width = 74
-        Height = 17
-        Caption = 'Interfaces'
-        Enabled = False
-        TabOrder = 7
-      end
-      object btn2: TcxButton
-        Left = 394
-        Top = 70
-        Width = 153
-        Height = 27
-        Caption = 'Gerar Todos'
-        Colors.Default = clGrayText
-        Colors.DefaultText = clGrayText
-        Colors.Normal = clGrayText
-        Colors.NormalText = clGrayText
-        Colors.Hot = clGrayText
-        Colors.HotText = clGrayText
-        Colors.Pressed = clGrayText
-        Colors.PressedText = clGrayText
-        Colors.Disabled = clGrayText
-        Colors.DisabledText = clGrayText
-        Enabled = False
-        TabOrder = 8
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btn2Click
-      end
-      object cheVideo: TCheckBox
-        Left = 134
-        Top = 146
-        Width = 161
-        Height = 17
-        Caption = 'Gerar apenas em video'
-        TabOrder = 9
-      end
-      object cheAutoInc: TCheckBox
-        Left = 207
-        Top = 100
-        Width = 90
-        Height = 17
-        Caption = 'Gerar AutoInc'
-        Checked = True
-        State = cbChecked
-        TabOrder = 10
-      end
-    end
-    object cxGroupBox2: TcxGroupBox
-      Left = 11
-      Top = 64
-      Caption = 'Configura'#231#245'es de Conex'#227'o'
-      Style.BorderStyle = ebsNone
-      Style.LookAndFeel.NativeStyle = False
-      Style.LookAndFeel.SkinName = 'UserSkin'
-      StyleDisabled.LookAndFeel.NativeStyle = False
-      StyleDisabled.LookAndFeel.SkinName = 'UserSkin'
-      TabOrder = 1
-      Transparent = True
-      Height = 178
-      Width = 542
-      object Label2: TLabel
-        Left = 39
-        Top = 25
-        Width = 59
-        Height = 16
-        Caption = 'DriverID:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label3: TLabel
-        Left = 295
-        Top = 25
-        Width = 67
-        Height = 16
-        Caption = 'Database:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label4: TLabel
-        Left = 29
-        Top = 52
-        Width = 69
-        Height = 16
-        Caption = 'Username:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label5: TLabel
-        Left = 294
-        Top = 52
-        Width = 68
-        Height = 16
-        Caption = 'Password:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label6: TLabel
-        Left = 65
-        Top = 79
-        Width = 33
-        Height = 16
-        Caption = 'Port:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label7: TLabel
-        Left = 158
-        Top = 79
-        Width = 49
-        Height = 16
-        Caption = 'Server:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label8: TLabel
-        Left = 8
-        Top = 107
-        Width = 90
-        Height = 16
-        Caption = 'SchemaName:'
-        Color = clLime
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clGray
-        Font.Height = -13
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-      end
-      object edtDriverID: TcxTextEdit
-        Left = 103
-        Top = 23
-        TabOrder = 0
-        Text = 'PG'
-        Width = 184
-      end
-      object edtUserName: TcxTextEdit
-        Left = 103
-        Top = 50
-        TabOrder = 1
-        Text = 'postgres'
-        Width = 184
-      end
-      object edtDatabase: TcxTextEdit
-        Left = 367
-        Top = 23
-        TabOrder = 2
-        Text = 'box'
-        Width = 162
-      end
-      object edtPassword: TcxTextEdit
-        Left = 367
-        Top = 50
-        TabOrder = 3
-        Text = 'd@t@box1825'
-        Width = 162
-      end
-      object edtServer: TcxTextEdit
-        Left = 212
-        Top = 77
-        TabOrder = 4
-        Text = '192.168.2.150'
-        Width = 317
-      end
-      object edtPort: TcxTextEdit
-        Left = 103
-        Top = 77
-        TabOrder = 5
-        Text = '8152'
-        Width = 48
-      end
-      object btnConectar: TcxButton
-        Left = 416
-        Top = 131
-        Width = 113
-        Height = 27
-        Caption = 'Conectar'
-        Colors.Default = clGrayText
-        Colors.DefaultText = clGrayText
-        Colors.Normal = clGrayText
-        Colors.NormalText = clGrayText
-        Colors.Hot = clGrayText
-        Colors.HotText = clGrayText
-        Colors.Pressed = clGrayText
-        Colors.PressedText = clGrayText
-        Colors.Disabled = clGrayText
-        Colors.DisabledText = clGrayText
-        TabOrder = 6
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        OnClick = btnConectarClick
-      end
-      object edtSchemaName: TcxTextEdit
-        Left = 103
-        Top = 104
-        TabOrder = 7
-        Text = 'public'
-        Width = 426
-      end
-    end
     object Panel3: TPanel
       Left = 11
       Top = 9
       Width = 1133
       Height = 46
-      TabOrder = 2
+      TabOrder = 0
       object Label9: TLabel
         Left = 338
         Top = 11
@@ -422,99 +44,432 @@ object frmPrincipal: TfrmPrincipal
         ParentFont = False
       end
     end
-  end
-  object grdGridTabelas: TcxGrid
-    Left = 0
-    Top = 254
-    Width = 265
-    Height = 411
-    Align = alLeft
-    TabOrder = 1
-    object grdGridTabelasView: TcxGridDBTableView
-      PopupMenu = PopupMenu1
-      Navigator.Buttons.CustomButtons = <>
-      Navigator.Buttons.First.Hint = 'Primeiro Registro'
-      Navigator.Buttons.First.ImageIndex = 12
-      Navigator.Buttons.PriorPage.Visible = False
-      Navigator.Buttons.Prior.Hint = 'Registro Anterior'
-      Navigator.Buttons.Prior.ImageIndex = 13
-      Navigator.Buttons.Next.Hint = 'Pr'#243'ximo Registro'
-      Navigator.Buttons.Next.ImageIndex = 14
-      Navigator.Buttons.NextPage.Visible = False
-      Navigator.Buttons.Last.Hint = 'Ultimo Registro'
-      Navigator.Buttons.Last.ImageIndex = 15
-      Navigator.Buttons.Insert.Visible = False
-      Navigator.Buttons.Delete.Visible = False
-      Navigator.Buttons.Edit.Visible = False
-      Navigator.Buttons.Post.Visible = False
-      Navigator.Buttons.Cancel.Visible = False
-      Navigator.Buttons.Refresh.ImageIndex = 11
-      Navigator.Buttons.Refresh.Visible = True
-      Navigator.Buttons.SaveBookmark.Hint = 'Salvar posi'#231#227'o do registro Selecionado'
-      Navigator.Buttons.SaveBookmark.Visible = False
-      Navigator.Buttons.GotoBookmark.Hint = 'Ir para a posi'#231#227'o do Registro Salvo'
-      Navigator.Buttons.GotoBookmark.Visible = False
-      Navigator.Buttons.Filter.ImageIndex = 5
-      Navigator.Buttons.Filter.Visible = True
-      Navigator.Visible = True
-      DataController.DataSource = dsLista_Tabelas
-      DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
-      DataController.Summary.SummaryGroups = <>
-      OptionsData.CancelOnExit = False
-      OptionsData.Deleting = False
-      OptionsData.DeletingConfirmation = False
-      OptionsData.Inserting = False
-      OptionsSelection.HideFocusRectOnExit = False
-      OptionsView.NavigatorOffset = 0
-      OptionsView.NoDataToDisplayInfoText = 'Nenhum registro encontrado'
-      OptionsView.GridLines = glVertical
-      OptionsView.GroupByBox = False
-      object grdGridTabelasViewOK: TcxGridDBColumn
-        DataBinding.FieldName = 'OK'
-        PropertiesClassName = 'TcxCheckBoxProperties'
-        Properties.ValueChecked = 'Sim'
-        Properties.ValueUnchecked = 'N'#227'o'
-        Width = 24
-        IsCaptionAssigned = True
+    object GroupBox1: TGroupBox
+      Left = 16
+      Top = 61
+      Width = 540
+      Height = 196
+      Caption = 'Configura'#231#227'o de Conex'#227'o'
+      Color = clWhite
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBackground = False
+      ParentColor = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 1
+      object Label2: TLabel
+        Left = 39
+        Top = 28
+        Width = 59
+        Height = 16
+        Caption = 'DriverID:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
       end
-      object grdGridTabelasViewTABELA: TcxGridDBColumn
-        Caption = 'TABELAS'
-        DataBinding.FieldName = 'TABELA'
-        HeaderAlignmentHorz = taCenter
-        Width = 245
+      object Label4: TLabel
+        Left = 29
+        Top = 60
+        Width = 69
+        Height = 16
+        Caption = 'Username:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label6: TLabel
+        Left = 65
+        Top = 92
+        Width = 33
+        Height = 16
+        Caption = 'Port:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label8: TLabel
+        Left = 8
+        Top = 124
+        Width = 90
+        Height = 16
+        Caption = 'SchemaName:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label3: TLabel
+        Left = 295
+        Top = 28
+        Width = 67
+        Height = 16
+        Caption = 'Database:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label5: TLabel
+        Left = 294
+        Top = 60
+        Width = 68
+        Height = 16
+        Caption = 'Password:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label7: TLabel
+        Left = 158
+        Top = 92
+        Width = 49
+        Height = 16
+        Caption = 'Server:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtDriverID: TEdit
+        Left = 103
+        Top = 23
+        Width = 186
+        Height = 26
+        TabOrder = 0
+        Text = 'PG'
+      end
+      object edtDatabase: TEdit
+        Left = 367
+        Top = 23
+        Width = 165
+        Height = 26
+        TabOrder = 1
+        Text = 'box'
+      end
+      object edtUserName: TEdit
+        Left = 103
+        Top = 55
+        Width = 186
+        Height = 26
+        TabOrder = 2
+        Text = 'postgres'
+      end
+      object edtPassword: TEdit
+        Left = 367
+        Top = 55
+        Width = 165
+        Height = 26
+        TabOrder = 3
+        Text = 'd@t@box1825'
+      end
+      object edtPort: TEdit
+        Left = 103
+        Top = 87
+        Width = 49
+        Height = 26
+        TabOrder = 4
+        Text = '8152'
+      end
+      object edtServer: TEdit
+        Left = 212
+        Top = 87
+        Width = 320
+        Height = 26
+        TabOrder = 5
+        Text = '192.168.2.150'
+      end
+      object edtSchemaName: TEdit
+        Left = 104
+        Top = 119
+        Width = 428
+        Height = 26
+        TabOrder = 6
+        Text = 'public'
+      end
+      object btnConectar: TButton
+        Left = 419
+        Top = 154
+        Width = 113
+        Height = 27
+        Caption = 'Conectar'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 7
+        OnClick = btnConectarClick
       end
     end
-    object grdGridTabelasPrimeiroNivel: TcxGridLevel
-      GridView = grdGridTabelasView
+    object GroupBox2: TGroupBox
+      Left = 572
+      Top = 61
+      Width = 572
+      Height = 196
+      Caption = 'Gerar'
+      Color = clWhite
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBackground = False
+      ParentColor = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      TabOrder = 2
+      object Label10: TLabel
+        Left = 66
+        Top = 83
+        Width = 70
+        Height = 16
+        Caption = 'Nome App:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object Label11: TLabel
+        Left = 15
+        Top = 33
+        Width = 121
+        Height = 16
+        Caption = 'Caminho Arquivos:'
+        Color = clLime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGray
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+      object btn2: TButton
+        Left = 426
+        Top = 122
+        Width = 138
+        Height = 27
+        Caption = 'Gerar Todos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        OnClick = btn2Click
+      end
+      object edtPath: TEdit
+        Left = 141
+        Top = 28
+        Width = 423
+        Height = 26
+        TabOrder = 1
+        Text = 'c:\Classes'
+      end
+      object edtApp: TEdit
+        Left = 141
+        Top = 83
+        Width = 423
+        Height = 26
+        TabOrder = 2
+        Text = 'ServerReact'
+      end
+      object cheSeparaPasta: TCheckBox
+        Left = 141
+        Top = 60
+        Width = 348
+        Height = 17
+        Caption = 'Separar arquivos por pasta (Nome Tabela)'
+        Checked = True
+        State = cbChecked
+        TabOrder = 3
+      end
+      object cheEntidade: TCheckBox
+        Left = 141
+        Top = 116
+        Width = 84
+        Height = 17
+        Caption = 'Entidades'
+        Checked = True
+        State = cbChecked
+        TabOrder = 4
+      end
+      object cheAutoInc: TCheckBox
+        Left = 249
+        Top = 116
+        Width = 120
+        Height = 17
+        Caption = 'Gerar AutoInc'
+        Checked = True
+        State = cbChecked
+        TabOrder = 5
+      end
+      object cheController: TCheckBox
+        Left = 141
+        Top = 139
+        Width = 84
+        Height = 17
+        Caption = 'Controller'
+        Checked = True
+        State = cbChecked
+        TabOrder = 6
+      end
+      object cheModel: TCheckBox
+        Left = 249
+        Top = 139
+        Width = 65
+        Height = 17
+        Caption = 'Model'
+        Enabled = False
+        TabOrder = 7
+      end
+      object cheInterface: TCheckBox
+        Left = 335
+        Top = 139
+        Width = 90
+        Height = 17
+        Caption = 'Interfaces'
+        Enabled = False
+        TabOrder = 8
+      end
+      object cheVideo: TCheckBox
+        Left = 141
+        Top = 166
+        Width = 195
+        Height = 17
+        Caption = 'Gerar apenas em video'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 9
+      end
+      object btn1: TButton
+        Left = 426
+        Top = 155
+        Width = 138
+        Height = 27
+        Caption = 'Gerar Selecionado'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -12
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 10
+        OnClick = btn1Click
+      end
     end
   end
   object Panel2: TPanel
-    Left = 265
-    Top = 254
-    Width = 10
-    Height = 411
+    Left = 320
+    Top = 273
+    Width = 15
+    Height = 392
     Align = alLeft
     BevelOuter = bvNone
     Color = cl3DDkShadow
     ParentBackground = False
-    TabOrder = 2
+    TabOrder = 1
   end
-  object script: TcxMemo
-    Left = 275
-    Top = 254
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 273
+    Width = 320
+    Height = 392
+    Align = alLeft
+    DataSource = dsLista_Tabelas
+    PopupMenu = PopupMenu1
+    TabOrder = 2
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnColEnter = DBGrid1ColEnter
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'OK'
+        Title.Alignment = taCenter
+        Width = 33
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TABELA'
+        Title.Alignment = taCenter
+        Width = 247
+        Visible = True
+      end>
+  end
+  object MemVideo: TMemo
+    Left = 335
+    Top = 273
+    Width = 821
+    Height = 392
     Align = alClient
-    Properties.ScrollBars = ssVertical
     TabOrder = 3
-    Height = 411
-    Width = 881
+    ExplicitLeft = 336
+    ExplicitTop = 251
+    ExplicitWidth = 826
+    ExplicitHeight = 411
   end
   object FDConexao: TFDConnection
     ConnectionName = 'postgres'
     Params.Strings = (
       'User_Name=postgres'
-      'Server='
-      'Port='
+      'Server=192.168.2.150'
+      'Port=8152'
+      'Password=d@t@box1825'
       'DriverID=PG')
     FetchOptions.AssignedValues = [evMode]
     ResourceOptions.AssignedValues = [rvAutoReconnect]
@@ -523,6 +478,7 @@ object frmPrincipal: TfrmPrincipal
     UpdateOptions.EnableDelete = False
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
+    Connected = True
     LoginPrompt = False
     Left = 1034
     Top = 336
@@ -541,7 +497,7 @@ object frmPrincipal: TfrmPrincipal
     UpdateOptions.KeyFields = 'TABELA'
     SQL.Strings = (
       'SELECT'
-      'varchar(3) '#39'Sim'#39' as "OK",'
+      ' '#39'1'#39' as "OK",'
       'TABLE_NAME AS TABELA'
       'FROM'
       '   INFORMATION_SCHEMA.TABLES   '
@@ -556,11 +512,12 @@ object frmPrincipal: TfrmPrincipal
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Size = 64
     end
-    object qryLista_TabelasOK: TWideStringField
+    object qryLista_TabelasOK: TWideMemoField
       AutoGenerateValue = arDefault
       FieldName = 'OK'
       Origin = '"OK"'
-      Size = 3
+      OnGetText = qryLista_TabelasOKGetText
+      BlobType = ftWideMemo
     end
   end
   object dsCFG_Geral: TDataSource
@@ -573,7 +530,7 @@ object frmPrincipal: TfrmPrincipal
     CatalogName = 'box'
     ObjectName = 'CAD_USUARIO'
     Left = 1032
-    Top = 272
+    Top = 280
     object FDMIQRECNO: TIntegerField
       FieldName = 'RECNO'
       ReadOnly = True
@@ -629,8 +586,8 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 328
-    Top = 408
+    Left = 1032
+    Top = 504
     object SelecionarTodos1: TMenuItem
       Caption = 'Marcar Todos'
       OnClick = SelecionarTodos1Click
