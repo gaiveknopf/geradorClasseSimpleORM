@@ -1,6 +1,7 @@
-<h1>Gerador de Entidades, Models e Controllers para SimpleORM para Postgres</h1>
+<h1>Gerador de Entidades e Controllers para SimpleORM e ReactJS Forms e Lists para Postgres.</h1>
 
-<p>Gera Models, Controllers e Entidades para serem usados junto ao SimpleORM https://github.com/bittencourtthulio/SimpleORM </p>
+<p>Gera Controllers e Entidades para serem usados junto ao SimpleORM https://github.com/bittencourtthulio/SimpleORM </p>
+<p>Gera Form e List para reactJS baseado no banco de dados.</p>
 <p>O SimpleORM tem o Objetivo de facilitar suas implementações de CRUD, agilizando mais de 80% do seu processo de desenvolvimento de software.</p>
 <p>O gerador cria Models, Controllers e Entidades do banco de dados auxiliando na criação do projeto.</p>
 </br>
