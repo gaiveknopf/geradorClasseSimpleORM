@@ -4,15 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, IniFiles,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters, cxStyles, dxSkinsCore,
-  dxSkinTheAsphaltWorld, dxSkinTheBezier, dxSkinsDefaultPainters, dxSkinValentine, dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark, dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint, dxSkinXmas2008Blue, cxCustomData, cxFilter,
-  cxData, cxDataStorage, cxEdit, cxNavigator, dxDateRanges, Data.DB, cxDBData, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
-  FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait, cxGridCustomTableView, cxGridTableView, cxGridServerModeTableView, FireDAC.Comp.Client, dxServerModeData, dxServerModeFireDACDataSource, cxGridLevel, cxClasses, cxGridCustomView,
-  cxGridDBTableView, cxGrid, FireDAC.DApt, Vcl.Menus, Vcl.StdCtrls, cxButtons, Vcl.ExtCtrls, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.Comp.DataSet, cxContainer, cxTextEdit, cxCheckBox, cxMemo, cxGroupBox, dxGDIPlusClasses, cxImage,
-  cxDBEdit, cxMaskEdit, cxButtonEdit, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids, dxSkinBlack, dxSkinBlue, dxSkinBlueprint, dxSkinCaramel, dxSkinCoffee, dxSkinDarkroom, dxSkinDarkSide, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinFoggy,
-  dxSkinGlassOceans, dxSkinHighContrast, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
-  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinOffice2016Colorful, dxSkinOffice2016Dark,
-  dxSkinOffice2019Colorful, dxSkinPumpkin, dxSkinSeven, dxSkinSevenClassic, dxSkinSharp, dxSkinSharpPlus, dxSkinSilver, dxSkinSpringtime, dxSkinStardust, dxSkinSummer2008;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.PG, FireDAC.Phys.PGDef, FireDAC.VCLUI.Wait,  FireDAC.Comp.Client, FireDAC.DApt, Vcl.Menus, Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.Comp.DataSet, Vcl.DBCtrls, Vcl.Grids, Vcl.DBGrids;
 
 type
   TfrmPrincipal = class(TForm)
@@ -70,8 +63,8 @@ type
     cheEntidade: TCheckBox;
     cheAutoInc: TCheckBox;
     cheController: TCheckBox;
-    cheModel: TCheckBox;
-    cheInterface: TCheckBox;
+    cheReactList: TCheckBox;
+    cheReactForm: TCheckBox;
     cheVideo: TCheckBox;
     btn1: TButton;
     procedure btnConectarClick(Sender: TObject);
@@ -93,6 +86,10 @@ type
 
     procedure Verifica_AutoInc(autoIncField : string);
     procedure Gera_Controller(aTableName: string);
+
+    procedure GerarJS(aTableName : String; Fields : TStringList);
+    procedure Gerar_Lista_React;
+    procedure GeraFormReact(aTableName: String; Fields: TStringList);
     { Private declarations }
   public
     { Public declarations }
@@ -115,10 +112,10 @@ var
 
   VAutoInc : Boolean;
 
-  VEntidade : TMemo;
-  VController : TMemo;
-  VInterface : TMemo;
-  VModel : TMemo;
+  vEntidade : TMemo;
+  vController : TMemo;
+  vReactList : TMemo;
+  vReactForm : TMemo;
 
   SeqField : string;
 
@@ -265,7 +262,7 @@ begin
   end;
 
   FClasse.Clear;
-  FClasse.Add('unit ' + edtApp.Text + '.Model.Entidade.' + UpperCase(aTable) + ';');
+  FClasse.Add('unit ' + edtApp.Text + '.Model.Entidades.' + UpperCase(aTable) + ';');
   FClasse.Add('');
   FClasse.Add('interface');
   FClasse.Add('');
@@ -379,6 +376,59 @@ begin
     end;
 end;
 
+procedure TfrmPrincipal.Gerar_Lista_React;
+var
+  Tabelas, Fields: TStringList;
+  I: Integer;
+begin
+  FDConexao.Connected := True;
+  Tabelas := TStringList.Create;
+  try
+    FDConexao.GetTableNames('', '', '', Tabelas, [osMy]);
+    for I := 0 to Pred(Tabelas.Count) -1 do
+    begin
+      Fields := TStringList.Create;
+      try
+        FDConexao.GetFieldNames('', '', Tabelas[i], '', Fields);
+        GerarJS(Tabelas[I], Fields);
+
+        if cheSeparaPasta.Checked then
+        begin
+          if cheVideo.Checked = false then
+          begin
+            //ReactList
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+              CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\list.js');
+          end;
+        end
+        else
+        //Todos na mesma pasta
+        begin
+          if cheVideo.Checked = false then
+          begin
+            //ReactList
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '_list.js');
+          end;
+        end;
+      finally
+        Fields.Free;
+      end;
+    end;
+  finally
+    FDConexao.Connected := False;
+    Tabelas.Free;
+  end;
+end;
+
 procedure TfrmPrincipal.Conecta_Bancos;
 begin
   // Parametros BD
@@ -469,6 +519,8 @@ begin
 end;
 
 procedure TfrmPrincipal.btn2Click(Sender: TObject);
+var
+  Tabelas, Fields: TStringList;
 begin
   qryLista_Tabelas.First;
   while not qryLista_Tabelas.Eof do
@@ -478,10 +530,26 @@ begin
           //Gera Entidade
           if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
           if cheController.Checked then Gera_Controller(qryLista_TabelasTABELA.AsString);
-
-//          if cheInterface.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-//          if cheModel.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
-
+          if cheReactList.Checked then
+          begin
+            Fields := TStringList.Create;
+            try
+              FDConexao.GetFieldNames('', '', qryLista_TabelasTABELA.asString, '', Fields);
+              GerarJS(qryLista_TabelasTABELA.asString, Fields);
+            finally
+              Fields.Free;
+            end;
+          end;
+          if cheReactForm.Checked then
+          begin
+            Fields := TStringList.Create;
+            try
+              FDConexao.GetFieldNames('', '', qryLista_TabelasTABELA.asString, '', Fields);
+              GeraFormReact(qryLista_TabelasTABELA.asString, Fields);
+            finally
+              Fields.Free;
+            end;
+          end;
           //Separado Por Pasta
           if cheSeparaPasta.Checked then
           begin
@@ -509,16 +577,6 @@ begin
                   CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
                 VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
               end;
-              //Interface
-              if cheInterface.Checked then
-              begin
-
-              end;
-              //Model
-              if cheModel.Checked then
-              begin
-
-              end;
             end;
           end
           else
@@ -544,16 +602,6 @@ begin
                   CreateDir(edtPath.Text + '\src');
                 VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
               end;
-              //Interface
-              if cheInterface.Checked then
-              begin
-
-              end;
-              //Model
-              if cheModel.Checked then
-              begin
-
-              end;
             end;
           end;
         end;
@@ -565,10 +613,261 @@ end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
-  VEntidade := TMemo.Create(Self);
-  VController := TMemo.Create(Self);
-  VInterface := TMemo.Create(Self);
-  VModel := TMemo.Create(Self);
+  vEntidade := TMemo.Create(Self);
+  vController := TMemo.Create(Self);
+  vReactList := TMemo.Create(Self);
+  VReactForm := TMemo.Create(Self);
+end;
+
+procedure TfrmPrincipal.GerarJS(aTableName: String; Fields: TStringList);
+var
+  i: integer;
+ vTable, vField : string;
+ FReact : TStringList;
+begin
+   FReact := TStringList.Create;
+   try
+      vTable := LowerCase(aTableName);
+      FReact.Add('import React, { Component } from ''react'';');
+      FReact.Add('import api from ''../../services/api'';');
+      FReact.Add('import { Link } from ''react-router-dom'';');
+      FReact.Add('');
+      FReact.Add('const $ = require(''jquery'');');
+      FReact.Add('$.dataTable = require(''datatables.net'');');
+      FReact.Add('');
+      FReact.Add('export default class ' + vTable + 'Table extends Component {');
+      FReact.Add('state = {');
+      FReact.Add('_' + vTable + ': [],');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('async componentDidMount() {');
+      FReact.Add('await this.get' + vTable + '();');
+      FReact.Add('this.$el = $(this.el);');
+      FReact.Add('this.$el.DataTable({})');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('');
+      FReact.Add('async get' + vTable + '() {');
+      FReact.Add('const response = await api.get(''/' + vTable + ''');');
+      FReact.Add('this.setState({ _' + vTable + ': response.data });');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('onDelete(id) {');
+      FReact.Add('api.delete(`/' + vTable + '/${id}`)');
+      FReact.Add('.then(res => {');
+      FReact.Add('this.get' + vTable + '();');
+      FReact.Add('})');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('render() {');
+      FReact.Add('return (');
+      FReact.Add('<div className="' + vTable + 'TableClass">');
+      FReact.Add('<h3>Lista de ' + vTable + ' ({this.state._' + vTable + '.length})</h3>');
+      FReact.Add('<br />');
+      FReact.Add('<div className="row">');
+      FReact.Add('<div className="col-sm-12">');
+      FReact.Add('<Link to={`/' + vTable + '/new`} className="btn btn-success">Novo</Link>');
+      FReact.Add('</div>');
+      FReact.Add('</div>');
+      FReact.Add('<br />');
+      FReact.Add('<table className="display " width="100%" ref={el => this.el = el}>');
+      FReact.Add('{/* <table className="table table-hover table-dark"> */}');
+      FReact.Add('<thead>');
+      FReact.Add('<tr>');
+
+      for I := 0 to Pred(Fields.Count) do
+      begin
+        FReact.Add('<th scope="col">' + Fields[i] + '</th>');
+      end;
+
+      FReact.Add('<th scope="col">Ações</th>');
+      FReact.Add('</tr>');
+      FReact.Add('</thead>');
+      FReact.Add('<tbody>');
+      FReact.Add('{this.state._' + vTable + '.map(' + vTable + ' => (');
+      FReact.Add('<tr key={' + vTable + '.usu_codigo}>');
+
+      for I := 0 to Pred(Fields.Count) do
+      begin
+        FReact.Add('<td scope="row">{' + vTable + '.' + Fields[I] + '}</td>');
+      end;
+
+      FReact.Add('<td >');
+      FReact.Add('<Link to={`/' + vTable + '/${' + vTable + '.usu_codigo}`}><i className="far fa-edit"></i></Link> <wbr></wbr>');
+      FReact.Add('<Link to={`/' + vTable + '/`} onClick={() => this.onDelete(' + vTable + '.usu_codigo)} ><i className="far fa-trash-alt"></i></Link>');
+      FReact.Add('</td>');
+      FReact.Add('</tr>');
+      FReact.Add('))}');
+      FReact.Add('</tbody>');
+      FReact.Add('</table>');
+      FReact.Add('</div>');
+      FReact.Add(')');
+      FReact.Add('}');
+      FReact.Add('}');
+
+      vReactList.Text := FReact.Text;
+
+      MemVideo.Text := FReact.Text;
+
+      if cheVideo.checked = false then
+      if cheSeparaPasta.Checked then
+      begin
+          if cheReactList.Checked then
+          begin
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+              CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\list.js');
+          end;
+      end
+      else
+      begin
+          if cheReactList.Checked then
+          begin
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '_list.js');
+          end;
+      end;
+   finally
+      FReact.Free;
+      FDMIQ.Active := False;
+   end;
+end;
+
+procedure TfrmPrincipal.GeraFormReact(aTableName: String; Fields: TStringList);
+var
+  i: integer;
+ vTable, vField : string;
+ FReact : TStringList;
+begin
+   FReact := TStringList.Create;
+   try
+      vTable := LowerCase(aTableName);
+      FReact.Add('import React, { Component } from ''react'';');
+      FReact.Add('import api from ''../../services/api'';');
+      FReact.Add('import { Link, withRouter } from ''react-router-dom'';');
+      FReact.Add('');
+      FReact.Add('class ' + vTable + 'Form extends Component {');
+      FReact.Add('Tipo = '''';');
+      FReact.Add('');
+      FReact.Add('state = {');
+      FReact.Add('data: {');
+
+      for I := 0 to Pred(Fields.Count) do
+      begin
+        FReact.Add('' + Fields[I] + ': '''',');
+      end;
+
+      FReact.Add('},');
+      FReact.Add('flags: {');
+      FReact.Add('new: null');
+      FReact.Add('}');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('dataChange(ev) {');
+      FReact.Add('let name = [ev.target.name];');
+      FReact.Add('let value = ev.target.value;');
+      FReact.Add('this.setState(prevState => ({');
+      FReact.Add('data: { ...prevState.data, [name]: value }');
+      FReact.Add('}))');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('async componentDidMount() {');
+      FReact.Add('const { id } = this.props.match.params;');
+      FReact.Add('if (typeof id !== "undefined") {');
+      FReact.Add('this.Tipo = ''Alteração'';');
+      FReact.Add('await api.get(`/' + vTable + '/${id}`)');
+      FReact.Add('.then(res => {');
+      FReact.Add('this.setState({ data: res.data })');
+      FReact.Add('this.setState({ flags: { new: false } })');
+      FReact.Add('})');
+      FReact.Add('} else {');
+      FReact.Add('this.setState({ flags: { new: true } })');
+      FReact.Add('this.Tipo = ''Cadastro'';');
+      FReact.Add('}');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('handleSubmit = event => {');
+      FReact.Add('event.preventDefault();');
+      FReact.Add('if (this.state.flags.new) {');
+      FReact.Add('api.post(`/' + vTable + '`, this.state.data)');
+      FReact.Add('.then(res => {');
+      FReact.Add('this.props.history.push(''/' + vTable + ''')');
+      FReact.Add('})');
+      FReact.Add('} else {');
+      FReact.Add('api.put(`/' + vTable + '/${this.state.data.CAMPO_CODIGO}`, this.state.data)');
+      FReact.Add('.then(res => {');
+      FReact.Add('this.props.history.push(''/' + vTable + ''')');
+      FReact.Add('})');
+      FReact.Add('}');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('');
+      FReact.Add('');
+      FReact.Add('render() {');
+      FReact.Add('return (');
+      FReact.Add('<div className="col-sm-12">');
+      FReact.Add('<h3>{this.Tipo} de ' + vTable + '</h3>');
+      FReact.Add('<form onSubmit={this.handleSubmit}>');
+
+      for I := 0 to Pred(Fields.Count) do
+      begin
+        FReact.Add('<div className="form-group">');
+        FReact.Add('<label>' + Fields[I] + '</label>');
+        FReact.Add('<input type="text" name="' + Fields[I] + '" value={this.state.data.' + Fields[I] + '} onChange={this.dataChange.bind(this)} className="form-control" />');
+        FReact.Add('</div>');
+      end;
+
+      FReact.Add('<button type="submit" className="btn btn-primary">Submit</button>');
+      FReact.Add('<Link className="btn btn-danger" to={`/' + vTable + '`} >Back</Link>');
+      FReact.Add('</form>');
+      FReact.Add('</div>');
+      FReact.Add(')');
+      FReact.Add('}');
+      FReact.Add('}');
+      FReact.Add('');
+      FReact.Add('export default withRouter(' + vTable + 'Form)');
+
+
+      vReactList.Text := FReact.Text;
+
+      MemVideo.Text := FReact.Text;
+
+      if cheVideo.checked = false then
+      if cheSeparaPasta.Checked then
+      begin
+          if cheReactForm.Checked then
+          begin
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            if not DirectoryExists(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString) then
+              CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\form.js');
+          end;
+      end
+      else
+      begin
+          if cheReactForm.Checked then
+          begin
+            if not DirectoryExists(edtPath.Text) then
+              CreateDir(edtPath.Text);
+            if not DirectoryExists(edtPath.Text + '\src') then
+              CreateDir(edtPath.Text + '\src');
+            vReactList.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '_form.js');
+          end;
+      end;
+   finally
+      FReact.Free;
+      FDMIQ.Active := False;
+   end;
 end;
 
 procedure TfrmPrincipal.Gera_Controller(aTableName : string);
@@ -658,16 +957,32 @@ begin
 end;
 
 procedure TfrmPrincipal.btn1Click(Sender: TObject);
+var
+  Tabelas, Fields: TStringList;
 begin
   //Gera Entidade
   if cheEntidade.Checked then Gera_Entidade(qryLista_TabelasTABELA.AsString);
   if cheController.Checked then Gera_Controller(qryLista_TabelasTABELA.AsString);
-
-//  if cheModel.Checked then Gera_Model(qryLista_TabelasTABELA.AsString);
-
-//  if cheInterface.Checked then Gera_Interface(qryLista_TabelasTABELA.AsString);
-
-
+  if cheReactList.Checked then
+  begin
+    Fields := TStringList.Create;
+    try
+      FDConexao.GetFieldNames('', '', qryLista_TabelasTABELA.asString, '', Fields);
+      GerarJS(qryLista_TabelasTABELA.asString, Fields);
+    finally
+      Fields.Free;
+    end;
+  end;
+  if cheReactForm.Checked then
+  begin
+    Fields := TStringList.Create;
+    try
+      FDConexao.GetFieldNames('', '', qryLista_TabelasTABELA.asString, '', Fields);
+      GeraFormReact(qryLista_TabelasTABELA.asString, Fields);
+    finally
+      Fields.Free;
+    end;
+  end;
   //Separado Por Pasta
   if cheSeparaPasta.Checked then
   begin
@@ -695,16 +1010,6 @@ begin
           CreateDir(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString);
         VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
       end;
-      //Interface
-      if cheInterface.Checked then
-      begin
-
-      end;
-      //Model
-      if cheModel.Checked then
-      begin
-
-      end;
     end;
   end
   else
@@ -728,17 +1033,7 @@ begin
           CreateDir(edtPath.Text);
         if not DirectoryExists(edtPath.Text + '\src') then
           CreateDir(edtPath.Text + '\src');
-        VController.Lines.SaveToFile(edtPath.Text + '\src\' + qryLista_TabelasTABELA.asString + '\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
-      end;
-      //Interface
-      if cheInterface.Checked then
-      begin
-
-      end;
-      //Model
-      if cheModel.Checked then
-      begin
-
+        VController.Lines.SaveToFile(edtPath.Text + '\src\' + edtApp.Text + '.Controller.' + UpperCase(qryLista_TabelasTABELA.asString) + '.pas');
       end;
     end;
   end;

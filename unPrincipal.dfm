@@ -1,7 +1,7 @@
 object frmPrincipal: TfrmPrincipal
   Left = 0
   Top = 0
-  Caption = 'Gerador de Classes'
+  Caption = 'ClassGenerator'
   ClientHeight = 665
   ClientWidth = 1156
   Color = clBtnFace
@@ -18,7 +18,7 @@ object frmPrincipal: TfrmPrincipal
     Left = 0
     Top = 0
     Width = 1156
-    Height = 273
+    Height = 329
     Align = alTop
     BevelOuter = bvNone
     Color = cl3DDkShadow
@@ -48,7 +48,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 16
       Top = 61
       Width = 540
-      Height = 196
+      Height = 220
       Caption = 'Configura'#231#227'o de Conex'#227'o'
       Color = clWhite
       DoubleBuffered = False
@@ -197,7 +197,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 165
         Height = 26
         TabOrder = 3
-        Text = 'd@t@box1825'
+        Text = '1234'
       end
       object edtPort: TEdit
         Left = 103
@@ -205,7 +205,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 49
         Height = 26
         TabOrder = 4
-        Text = '8152'
+        Text = '5432'
       end
       object edtServer: TEdit
         Left = 212
@@ -213,7 +213,7 @@ object frmPrincipal: TfrmPrincipal
         Width = 320
         Height = 26
         TabOrder = 5
-        Text = '192.168.2.150'
+        Text = 'localhost'
       end
       object edtSchemaName: TEdit
         Left = 104
@@ -224,10 +224,10 @@ object frmPrincipal: TfrmPrincipal
         Text = 'public'
       end
       object btnConectar: TButton
-        Left = 419
-        Top = 154
-        Width = 113
-        Height = 27
+        Left = 398
+        Top = 158
+        Width = 134
+        Height = 37
         Caption = 'Conectar'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGrayText
@@ -243,7 +243,7 @@ object frmPrincipal: TfrmPrincipal
       Left = 572
       Top = 61
       Width = 572
-      Height = 196
+      Height = 220
       Caption = 'Gerar'
       Color = clWhite
       DoubleBuffered = False
@@ -289,9 +289,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object btn2: TButton
         Left = 426
-        Top = 122
+        Top = 176
         Width = 138
-        Height = 27
+        Height = 36
         Caption = 'Gerar Todos'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGrayText
@@ -339,7 +339,7 @@ object frmPrincipal: TfrmPrincipal
         TabOrder = 4
       end
       object cheAutoInc: TCheckBox
-        Left = 249
+        Left = 285
         Top = 116
         Width = 120
         Height = 17
@@ -358,43 +358,46 @@ object frmPrincipal: TfrmPrincipal
         State = cbChecked
         TabOrder = 6
       end
-      object cheModel: TCheckBox
-        Left = 249
+      object cheReactList: TCheckBox
+        Left = 285
         Top = 139
-        Width = 65
+        Width = 92
         Height = 17
-        Caption = 'Model'
-        Enabled = False
+        Caption = 'React List'
         TabOrder = 7
       end
-      object cheInterface: TCheckBox
-        Left = 335
+      object cheReactForm: TCheckBox
+        Left = 411
         Top = 139
-        Width = 90
+        Width = 102
         Height = 17
-        Caption = 'Interfaces'
-        Enabled = False
+        Caption = 'React Form'
         TabOrder = 8
       end
       object cheVideo: TCheckBox
-        Left = 141
-        Top = 166
+        Left = 49
+        Top = 182
         Width = 195
         Height = 17
+        AllowGrayed = True
         Caption = 'Gerar apenas em video'
+        Color = clMedGray
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clGray
         Font.Height = -15
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
+        ParentColor = False
         ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
         TabOrder = 9
       end
       object btn1: TButton
-        Left = 426
-        Top = 155
+        Left = 282
+        Top = 176
         Width = 138
-        Height = 27
+        Height = 36
         Caption = 'Gerar Selecionado'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clGrayText
@@ -409,9 +412,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object Panel2: TPanel
     Left = 320
-    Top = 273
+    Top = 329
     Width = 15
-    Height = 392
+    Height = 336
     Align = alLeft
     BevelOuter = bvNone
     Color = cl3DDkShadow
@@ -420,9 +423,9 @@ object frmPrincipal: TfrmPrincipal
   end
   object DBGrid1: TDBGrid
     Left = 0
-    Top = 273
+    Top = 329
     Width = 320
-    Height = 392
+    Height = 336
     Align = alLeft
     DataSource = dsLista_Tabelas
     PopupMenu = PopupMenu1
@@ -453,15 +456,12 @@ object frmPrincipal: TfrmPrincipal
   end
   object MemVideo: TMemo
     Left = 335
-    Top = 273
+    Top = 329
     Width = 821
-    Height = 392
+    Height = 336
     Align = alClient
+    ScrollBars = ssVertical
     TabOrder = 3
-    ExplicitLeft = 336
-    ExplicitTop = 251
-    ExplicitWidth = 826
-    ExplicitHeight = 411
   end
   object FDConexao: TFDConnection
     ConnectionName = 'postgres'
@@ -478,7 +478,6 @@ object frmPrincipal: TfrmPrincipal
     UpdateOptions.EnableDelete = False
     UpdateOptions.EnableInsert = False
     UpdateOptions.EnableUpdate = False
-    Connected = True
     LoginPrompt = False
     Left = 1034
     Top = 336
